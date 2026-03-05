@@ -8,11 +8,21 @@ export default function AdminFeed() {
     const [searchTerm, setSearchTerm] = useState('')
     const [activeTab, setActiveTab] = useState('feed') // 'feed' | 'stats'
 
-    const filteredEntries = allEntries.filter(e =>
-        e.text.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        e.tags?.some(t => t.toLowerCase().includes(searchTerm.toLowerCase())) ||
-        e.category?.toLowerCase().includes(searchTerm.toLowerCase())
-    )
+    const [visibilityFilter, setVisibilityFilter] = useState('all') // 'all' | 'shared' | 'private'
+
+    const filteredEntries = allEntries.filter(e => {
+        const matchesSearch = e.text.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            e.tags?.some(t => t.toLowerCase().includes(searchTerm.toLowerCase())) ||
+            e.category?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            e.author?.full_name?.toLowerCase().includes(searchTerm.toLowerCase())
+
+        const matchesVisibility =
+            visibilityFilter === 'all' ? true :
+                visibilityFilter === 'private' ? e.is_private === true :
+                    e.is_private === false
+
+        return matchesSearch && matchesVisibility
+    })
 
     return (
         <div className="h-full flex flex-col bg-gray-900">
@@ -66,9 +76,30 @@ export default function AdminFeed() {
                                 className="w-full bg-gray-950 border border-gray-800 rounded-xl py-3 pl-10 pr-4 text-sm text-gray-200 focus:outline-none focus:border-red-500/50"
                             />
                         </div>
-
-                        <div className="font-mono text-xs text-gray-500 mb-4 tracking-wider">
-                            FOUND {filteredEntries.length} ENTRIES
+                        <div className="flex items-center justify-between mb-4">
+                            <div className="flex gap-2 text-[11px] font-bold">
+                                <button
+                                    onClick={() => setVisibilityFilter('all')}
+                                    className={`px-3 py-1.5 rounded-lg transition-colors ${visibilityFilter === 'all' ? 'bg-gray-800 text-white' : 'text-gray-500 hover:text-gray-300'}`}
+                                >
+                                    ALL
+                                </button>
+                                <button
+                                    onClick={() => setVisibilityFilter('shared')}
+                                    className={`px-3 py-1.5 rounded-lg transition-colors ${visibilityFilter === 'shared' ? 'bg-gray-800 text-white' : 'text-gray-500 hover:text-gray-300'}`}
+                                >
+                                    SHARED
+                                </button>
+                                <button
+                                    onClick={() => setVisibilityFilter('private')}
+                                    className={`px-3 py-1.5 rounded-lg transition-colors ${visibilityFilter === 'private' ? 'bg-gray-800 text-white' : 'text-gray-500 hover:text-gray-300'}`}
+                                >
+                                    PRIVATE
+                                </button>
+                            </div>
+                            <div className="font-mono text-xs text-gray-500 tracking-wider">
+                                {filteredEntries.length} ENTRIES
+                            </div>
                         </div>
 
                         <div className="space-y-4">

@@ -203,6 +203,11 @@ export default function DiaryFeed() {
         setEntries((prev) => prev.map((e) => (e.id === updatedEntry.id ? updatedEntry : e)))
     }
 
+    const handleEntryDeleted = (deletedId) => {
+        setEntries((prev) => prev.filter((e) => e.id !== deletedId))
+        setArchivedEntries((prev) => prev.filter((e) => e.id !== deletedId))
+    }
+
     const handleRestore = async (entryId) => {
         const { error } = await supabase
             .from('entries')
@@ -546,6 +551,7 @@ export default function DiaryFeed() {
                                                     entry={entry}
                                                     index={i}
                                                     onEntryUpdated={handleEntryUpdated}
+                                                    onEntryDeleted={handleEntryDeleted}
                                                     isArchived
                                                     onRestore={() => handleRestore(entry.id)}
                                                 />
@@ -587,7 +593,7 @@ export default function DiaryFeed() {
                                                 <div className="flex-1 h-[1px]" style={{ background: 'linear-gradient(to left, transparent, rgba(183,110,121,0.12))' }} />
                                             </div>
                                             {dateEntries.map((entry, i) => (
-                                                <DiaryCard key={entry.id} entry={entry} index={i} onEntryUpdated={handleEntryUpdated} />
+                                                <DiaryCard key={entry.id} entry={entry} index={i} onEntryUpdated={handleEntryUpdated} onEntryDeleted={handleEntryDeleted} />
                                             ))}
                                         </div>
                                     ))}
@@ -603,6 +609,7 @@ export default function DiaryFeed() {
                 <EntryComposer
                     activeTab={activeTab}
                     onEntryAdded={() => {
+                        fetchEntries()
                         if (feedRef.current) feedRef.current.scrollTo({ top: 0, behavior: 'smooth' })
                     }}
                 />

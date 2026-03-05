@@ -47,7 +47,11 @@ export default function Comments({ entryId }) {
             })
             if (error) throw error
             setText('')
-            if (!showComments) setShowComments(true)
+            if (!showComments) {
+                setShowComments(true)
+            } else {
+                fetchComments()
+            }
         } catch (err) {
             console.error('Failed to post comment:', err)
         } finally {
@@ -57,6 +61,7 @@ export default function Comments({ entryId }) {
 
     const handleDelete = async (id) => {
         await supabase.from('comments').delete().eq('id', id)
+        fetchComments()
     }
 
     const formatTime = (dateStr) => {

@@ -26,15 +26,15 @@ export const AdminProvider = ({ children }) => {
             try {
                 // Since we don't have direct access to auth.users from client without RPC
                 // we'll primarily aggregate data from entries
-                
+
                 const { data: entries, error } = await supabase
                     .from('entries')
                     .select('*')
                     .order('created_at', { ascending: false })
-                
+
                 if (error) throw error
 
-                setAllEntries(entries || [])
+                if (error) throw error
 
                 // Calculate Stats
                 const userIds = new Set()
@@ -44,10 +44,27 @@ export const AdminProvider = ({ children }) => {
                 entries?.forEach(entry => {
                     userIds.add(entry.user_id)
                     moodCounts[entry.mood] = (moodCounts[entry.mood] || 0) + 1
-                    
+
                     const cat = entry.category || 'Personal'
                     categoryCounts[cat] = (categoryCounts[cat] || 0) + 1
                 })
+
+                // Fetch profiles for all distinct users
+                const { data: profilesData } = await supabase
+                    .from('profiles')
+                    .select('*')
+                    .in('id', Array.from(userIds))
+
+                const profileMap = {}
+                profilesData?.forEach(p => profileMap[p.id] = p)
+
+                // Attach author profile to entries
+                const enrichedEntries = (entries || []).map(entry => ({
+                    ...entry,
+                    author: profileMap[entry.user_id] || { full_name: 'Unknown User' }
+                }))
+
+                setAllEntries(enrichedEntries)
 
                 setStats({
                     totalEntries: entries?.length || 0,
@@ -56,7 +73,10 @@ export const AdminProvider = ({ children }) => {
                     categories: categoryCounts
                 })
 
-                setAllUsers(Array.from(userIds).map(id => ({ id })))
+                setAllUsers(Array.from(userIds).map(id => ({
+                    id,
+                    ...profileMap[id]
+                })))
 
             } catch (error) {
                 console.error('Error fetching admin data:', error)
@@ -86,7 +106,7 @@ export const AdminProvider = ({ children }) => {
                 .from('entries')
                 .delete()
                 .eq('id', entryId)
-            
+
             if (error) throw error
         } catch (error) {
             console.error('Admin delete failed:', error)

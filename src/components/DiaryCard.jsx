@@ -32,7 +32,7 @@ function formatTime(dateStr) {
     return `${h}:${m} ${ampm}`
 }
 
-export default function DiaryCard({ entry, index, onEntryUpdated, isArchived = false, onRestore }) {
+export default function DiaryCard({ entry, index, onEntryUpdated, onEntryDeleted, isArchived = false, onRestore }) {
     const { user, isAdmin } = useAuth()
     const isOwn = entry.user_id === user?.id
     const isLocked = entry.unlock_date && new Date(entry.unlock_date) > new Date()
@@ -86,6 +86,7 @@ export default function DiaryCard({ entry, index, onEntryUpdated, isArchived = f
         if (error) console.error('Failed to delete entry:', error)
         setShowDeleteConfirm(false)
         setShowMenu(false)
+        if (!error) onEntryDeleted?.(entry.id)
     }
 
     const handleCancel = () => {
@@ -302,7 +303,12 @@ export default function DiaryCard({ entry, index, onEntryUpdated, isArchived = f
                         border: `1px solid ${isOwn ? 'rgba(183,110,121,0.12)' : 'rgba(122,107,74,0.1)'}`,
                     }}
                 >
-                    {isOwn ? '~ me' : `~ ${entry.author_name}`}
+                    {isOwn
+                        ? '~ me'
+                        : (isAdmin && entry.author?.full_name
+                            ? `~ ${entry.author.full_name}`
+                            : `~ ${entry.author_name || 'Anonymous'}`)
+                    }
                 </span>
                 {entry.is_private && (
                     <span

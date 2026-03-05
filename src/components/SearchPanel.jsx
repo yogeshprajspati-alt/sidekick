@@ -29,7 +29,7 @@ export default function SearchPanel({ isOpen, onClose, onApplySearch }) {
     return (
         <AnimatePresence>
             {isOpen && (
-                <>
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
@@ -42,7 +42,7 @@ export default function SearchPanel({ isOpen, onClose, onApplySearch }) {
                         initial={{ opacity: 0, scale: 0.95, y: 20 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                        className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-md z-50 p-6 rounded-2xl flex flex-col max-h-[90vh]"
+                        className="relative w-[90%] max-w-md z-50 p-6 rounded-2xl flex flex-col max-h-[90vh]"
                         style={{
                             background: 'linear-gradient(145deg, rgba(20, 16, 18, 0.98) 0%, rgba(14, 11, 13, 0.99) 100%)',
                             border: '1px solid rgba(183, 110, 121, 0.2)',
@@ -73,7 +73,7 @@ export default function SearchPanel({ isOpen, onClose, onApplySearch }) {
                                 </div>
                             </div>
 
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className="flex flex-col sm:grid sm:grid-cols-2 gap-4">
                                 {/* Date Range */}
                                 <div>
                                     <label className="text-[10px] uppercase tracking-wider text-white/50 block mb-2 px-1">Time</label>
@@ -142,7 +142,7 @@ export default function SearchPanel({ isOpen, onClose, onApplySearch }) {
                             </button>
                         </div>
                     </motion.div>
-                </>
+                </div>
             )}
         </AnimatePresence>
     )

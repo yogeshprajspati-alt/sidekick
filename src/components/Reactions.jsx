@@ -62,6 +62,7 @@ export default function Reactions({ entryId }) {
             })
         }
         setShowPicker(false)
+        fetchReactions()
     }
 
     return (
