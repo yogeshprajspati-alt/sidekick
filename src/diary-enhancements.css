@@ -86,197 +86,396 @@ textarea {
 
 /* ── Theme Overrides ── */
 
-/* 1. Midnight Rose */
-[data-diary-theme="midnight-rose"] body {
-  /* Defaults to global variables. */
+/* ── Theme Overrides ── */
+
+/* 1. Midnight Rose (Default/Base Variables Override to ensure reset if toggling) */
+[data-diary-theme="midnight-rose"] {
+  --rose-gold: #b76e79;
+  --rose-gold-light: #e6b8c0;
+  --warm-gold: #d4af37;
+  --deep-dark: #0a0a0f;
+  --glass-bg: rgba(255, 255, 255, 0.04);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-hover: rgba(255, 255, 255, 0.07);
+  --paper-cream: #fdf6ec;
+  --paper-dark: #f5ead6;
+  --margin-red: rgba(210, 80, 80, 0.25);
 }
-[data-diary-theme="midnight-rose"] .diary-page {
-  /* Defaults to global variables. */
+
+[data-diary-theme="midnight-rose"] body {
+  /* Inherits dark defaults */
 }
 
 /* 2. Vintage Parchment */
+[data-diary-theme="vintage-parchment"] {
+  --rose-gold: #8c7355;
+  --rose-gold-light: #b09677;
+  --warm-gold: #c3a165;
+  --deep-dark: #2a2016;
+  --glass-bg: rgba(140, 115, 85, 0.1);
+  --glass-border: rgba(140, 115, 85, 0.2);
+  --glass-hover: rgba(140, 115, 85, 0.15);
+  --paper-cream: #fffcf5;
+  --paper-dark: #e6d5b8;
+  --margin-red: rgba(140, 70, 70, 0.3);
+}
+
 [data-diary-theme="vintage-parchment"] body {
   background: linear-gradient(135deg, #f5ead6 0%, #e6d5b8 100%) !important;
+  color: #4a3627;
 }
+
 [data-diary-theme="vintage-parchment"] body::before {
   background: radial-gradient(circle, rgba(140, 115, 85, 0.2) 0%, transparent 70%);
 }
+
 [data-diary-theme="vintage-parchment"] .diary-page {
-  background: #fffcf5;
+  background: var(--paper-cream);
   color: #5c4033 !important;
   box-shadow: 2px 3px 15px rgba(140, 115, 85, 0.3);
   border: 1px solid rgba(140, 115, 85, 0.2);
 }
+
 [data-diary-theme="vintage-parchment"] .diary-page p {
   color: #4a3627 !important;
 }
 
 /* 3. Emerald Forest */
+[data-diary-theme="emerald-forest"] {
+  --rose-gold: #2e4f32;
+  --rose-gold-light: #4f7d54;
+  --warm-gold: #d4af37;
+  --deep-dark: #0a1f13;
+  --glass-bg: rgba(46, 79, 50, 0.1);
+  --glass-border: rgba(46, 79, 50, 0.25);
+  --glass-hover: rgba(46, 79, 50, 0.15);
+  --paper-cream: #f0fdf4;
+  --paper-dark: #dcfce7;
+  --margin-red: rgba(210, 80, 80, 0.25);
+}
+
 [data-diary-theme="emerald-forest"] body {
   background: linear-gradient(135deg, #134e4a 0%, #064e3b 100%) !important;
+  color: #ecfdf5;
 }
+
 [data-diary-theme="emerald-forest"] body::before {
   background: radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, transparent 70%);
 }
+
 [data-diary-theme="emerald-forest"] .diary-page {
-  background: #f0fdf4;
+  background: var(--paper-cream);
   color: #065f46 !important;
   box-shadow: 2px 3px 15px rgba(6, 95, 70, 0.4);
   border: 1px solid rgba(16, 185, 129, 0.3);
 }
+
 [data-diary-theme="emerald-forest"] .diary-page p {
   color: #047857 !important;
 }
 
 /* 4. Ocean Breeze */
+[data-diary-theme="ocean-breeze"] {
+  --rose-gold: #0ea5e9;
+  --rose-gold-light: #7dd3fc;
+  --warm-gold: #fde047;
+  --deep-dark: #0a1929;
+  --glass-bg: rgba(14, 165, 233, 0.1);
+  --glass-border: rgba(14, 165, 233, 0.25);
+  --glass-hover: rgba(14, 165, 233, 0.15);
+  --paper-cream: #f0f9ff;
+  --paper-dark: #e0f2fe;
+  --margin-red: rgba(239, 68, 68, 0.3);
+}
+
 [data-diary-theme="ocean-breeze"] body {
   background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%) !important;
+  color: #082f49;
 }
+
 [data-diary-theme="ocean-breeze"] body::before {
   background: radial-gradient(circle, rgba(14, 165, 233, 0.2) 0%, transparent 70%);
 }
+
 [data-diary-theme="ocean-breeze"] .diary-page {
-  background: #f0f9ff;
+  background: var(--paper-cream);
   color: #0369a1 !important;
   box-shadow: 2px 3px 15px rgba(14, 165, 233, 0.3);
   border: 1px solid rgba(56, 189, 248, 0.3);
 }
+
 [data-diary-theme="ocean-breeze"] .diary-page p {
   color: #075985 !important;
 }
 
 /* 5. Sunset Glow */
+[data-diary-theme="sunset-glow"] {
+  --rose-gold: #f97316;
+  --rose-gold-light: #fdba74;
+  --warm-gold: #fde047;
+  --deep-dark: #2a1005;
+  --glass-bg: rgba(249, 115, 22, 0.1);
+  --glass-border: rgba(249, 115, 22, 0.25);
+  --glass-hover: rgba(249, 115, 22, 0.15);
+  --paper-cream: #fff8f1;
+  --paper-dark: #ffedd5;
+  --margin-red: rgba(225, 29, 72, 0.3);
+}
+
 [data-diary-theme="sunset-glow"] body {
   background: linear-gradient(135deg, #ffedd5 0%, #fdba74 100%) !important;
+  color: #431407;
 }
+
 [data-diary-theme="sunset-glow"] body::before {
   background: radial-gradient(circle, rgba(249, 115, 22, 0.2) 0%, transparent 70%);
 }
+
 [data-diary-theme="sunset-glow"] .diary-page {
-  background: #fff8f1;
+  background: var(--paper-cream);
   color: #c2410c !important;
   box-shadow: 2px 3px 15px rgba(249, 115, 22, 0.3);
   border: 1px solid rgba(251, 146, 60, 0.3);
 }
+
 [data-diary-theme="sunset-glow"] .diary-page p {
   color: #9a3412 !important;
 }
 
 /* 6. Lavender Dream */
+[data-diary-theme="lavender-dream"] {
+  --rose-gold: #a855f7;
+  --rose-gold-light: #d8b4fe;
+  --warm-gold: #fbbf24;
+  --deep-dark: #1e0f2e;
+  --glass-bg: rgba(168, 85, 247, 0.1);
+  --glass-border: rgba(168, 85, 247, 0.25);
+  --glass-hover: rgba(168, 85, 247, 0.15);
+  --paper-cream: #faf5ff;
+  --paper-dark: #f3e8ff;
+  --margin-red: rgba(219, 39, 119, 0.3);
+}
+
 [data-diary-theme="lavender-dream"] body {
   background: linear-gradient(135deg, #f3e8ff 0%, #d8b4fe 100%) !important;
+  color: #2e1065;
 }
+
 [data-diary-theme="lavender-dream"] body::before {
   background: radial-gradient(circle, rgba(168, 85, 247, 0.2) 0%, transparent 70%);
 }
+
 [data-diary-theme="lavender-dream"] .diary-page {
-  background: #faf5ff;
+  background: var(--paper-cream);
   color: #6b21a8 !important;
   box-shadow: 2px 3px 15px rgba(168, 85, 247, 0.3);
   border: 1px solid rgba(192, 132, 252, 0.3);
 }
+
 [data-diary-theme="lavender-dream"] .diary-page p {
   color: #581c87 !important;
 }
 
 /* 7. Golden Hour */
+[data-diary-theme="golden-hour"] {
+  --rose-gold: #eab308;
+  --rose-gold-light: #fde047;
+  --warm-gold: #ca8a04;
+  --deep-dark: #291e00;
+  --glass-bg: rgba(234, 179, 8, 0.1);
+  --glass-border: rgba(234, 179, 8, 0.25);
+  --glass-hover: rgba(234, 179, 8, 0.15);
+  --paper-cream: #fefce8;
+  --paper-dark: #fef9c3;
+  --margin-red: rgba(239, 68, 68, 0.3);
+}
+
 [data-diary-theme="golden-hour"] body {
   background: linear-gradient(135deg, #fef9c3 0%, #fde047 100%) !important;
+  color: #422006;
 }
+
 [data-diary-theme="golden-hour"] body::before {
   background: radial-gradient(circle, rgba(234, 179, 8, 0.2) 0%, transparent 70%);
 }
+
 [data-diary-theme="golden-hour"] .diary-page {
-  background: #fefce8;
+  background: var(--paper-cream);
   color: #a16207 !important;
   box-shadow: 2px 3px 15px rgba(234, 179, 8, 0.3);
   border: 1px solid rgba(250, 204, 21, 0.3);
 }
+
 [data-diary-theme="golden-hour"] .diary-page p {
   color: #854d0e !important;
 }
 
 /* 8. Cherry Blossom */
+[data-diary-theme="cherry-blossom"] {
+  --rose-gold: #ec4899;
+  --rose-gold-light: #fbcfe8;
+  --warm-gold: #fbbf24;
+  --deep-dark: #2b101c;
+  --glass-bg: rgba(236, 72, 153, 0.1);
+  --glass-border: rgba(236, 72, 153, 0.25);
+  --glass-hover: rgba(236, 72, 153, 0.15);
+  --paper-cream: #fdf2f8;
+  --paper-dark: #fce7f3;
+  --margin-red: rgba(225, 29, 72, 0.3);
+}
+
 [data-diary-theme="cherry-blossom"] body {
   background: linear-gradient(135deg, #fce7f3 0%, #f9a8d4 100%) !important;
+  color: #4c0519;
 }
+
 [data-diary-theme="cherry-blossom"] body::before {
   background: radial-gradient(circle, rgba(236, 72, 153, 0.2) 0%, transparent 70%);
 }
+
 [data-diary-theme="cherry-blossom"] .diary-page {
-  background: #fdf2f8;
+  background: var(--paper-cream);
   color: #be185d !important;
   box-shadow: 2px 3px 15px rgba(236, 72, 153, 0.3);
   border: 1px solid rgba(244, 114, 182, 0.3);
 }
+
 [data-diary-theme="cherry-blossom"] .diary-page p {
   color: #9d174d !important;
 }
 
 /* 9. Arctic Frost */
+[data-diary-theme="arctic-frost"] {
+  --rose-gold: #06b6d4;
+  --rose-gold-light: #a5f3fc;
+  --warm-gold: #93c5fd;
+  --deep-dark: #081e26;
+  --glass-bg: rgba(6, 182, 212, 0.1);
+  --glass-border: rgba(6, 182, 212, 0.25);
+  --glass-hover: rgba(6, 182, 212, 0.15);
+  --paper-cream: #ecfeff;
+  --paper-dark: #cffafe;
+  --margin-red: rgba(14, 165, 233, 0.3);
+}
+
 [data-diary-theme="arctic-frost"] body {
   background: linear-gradient(135deg, #cffafe 0%, #67e8f9 100%) !important;
+  color: #083344;
 }
+
 [data-diary-theme="arctic-frost"] body::before {
   background: radial-gradient(circle, rgba(6, 182, 212, 0.2) 0%, transparent 70%);
 }
+
 [data-diary-theme="arctic-frost"] .diary-page {
-  background: #ecfeff;
+  background: var(--paper-cream);
   color: #0e7490 !important;
   box-shadow: 2px 3px 15px rgba(6, 182, 212, 0.3);
   border: 1px solid rgba(34, 211, 238, 0.3);
 }
+
 [data-diary-theme="arctic-frost"] .diary-page p {
   color: #155e75 !important;
 }
 
 /* 10. Autumn Leaves */
+[data-diary-theme="autumn-leaves"] {
+  --rose-gold: #b45309;
+  --rose-gold-light: #fcd34d;
+  --warm-gold: #d97706;
+  --deep-dark: #261604;
+  --glass-bg: rgba(180, 83, 9, 0.1);
+  --glass-border: rgba(180, 83, 9, 0.25);
+  --glass-hover: rgba(180, 83, 9, 0.15);
+  --paper-cream: #fffbeb;
+  --paper-dark: #fef3c7;
+  --margin-red: rgba(153, 27, 27, 0.3);
+}
+
 [data-diary-theme="autumn-leaves"] body {
   background: linear-gradient(135deg, #fef3c7 0%, #fcd34d 100%) !important;
+  color: #451a03;
 }
+
 [data-diary-theme="autumn-leaves"] body::before {
   background: radial-gradient(circle, rgba(180, 83, 9, 0.2) 0%, transparent 70%);
 }
+
 [data-diary-theme="autumn-leaves"] .diary-page {
-  background: #fffbeb;
+  background: var(--paper-cream);
   color: #92400e !important;
   box-shadow: 2px 3px 15px rgba(180, 83, 9, 0.3);
   border: 1px solid rgba(251, 191, 36, 0.5);
 }
+
 [data-diary-theme="autumn-leaves"] .diary-page p {
   color: #78350f !important;
 }
 
 /* 11. Cosmic Purple */
+[data-diary-theme="cosmic-purple"] {
+  --rose-gold: #6366f1;
+  --rose-gold-light: #a5b4fc;
+  --warm-gold: #d8b4fe;
+  --deep-dark: #0f0e24;
+  --glass-bg: rgba(99, 102, 241, 0.1);
+  --glass-border: rgba(99, 102, 241, 0.25);
+  --glass-hover: rgba(99, 102, 241, 0.15);
+  --paper-cream: #2e2854;
+  --paper-dark: #1e1b4b;
+  --margin-red: rgba(244, 114, 182, 0.3);
+}
+
 [data-diary-theme="cosmic-purple"] body {
   background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%) !important;
+  color: #e0e7ff;
 }
+
 [data-diary-theme="cosmic-purple"] body::before {
   background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
 }
+
 [data-diary-theme="cosmic-purple"] .diary-page {
-  background: #2e2854;
+  background: var(--paper-cream);
   color: #c7d2fe !important;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
   border: 1px solid rgba(99, 102, 241, 0.3);
 }
+
 [data-diary-theme="cosmic-purple"] .diary-page p {
   color: #a5b4fc !important;
 }
 
 /* 12. Mint Fresh */
+[data-diary-theme="mint-fresh"] {
+  --rose-gold: #10b981;
+  --rose-gold-light: #6ee7b7;
+  --warm-gold: #fcd34d;
+  --deep-dark: #052618;
+  --glass-bg: rgba(16, 185, 129, 0.1);
+  --glass-border: rgba(16, 185, 129, 0.25);
+  --glass-hover: rgba(16, 185, 129, 0.15);
+  --paper-cream: #f0fdf4;
+  --paper-dark: #d1fae5;
+  --margin-red: rgba(244, 63, 94, 0.3);
+}
+
 [data-diary-theme="mint-fresh"] body {
   background: linear-gradient(135deg, #d1fae5 0%, #6ee7b7 100%) !important;
+  color: #022c22;
 }
+
 [data-diary-theme="mint-fresh"] body::before {
   background: radial-gradient(circle, rgba(16, 185, 129, 0.2) 0%, transparent 70%);
 }
+
 [data-diary-theme="mint-fresh"] .diary-page {
-  background: #f0fdf4;
+  background: var(--paper-cream);
   color: #047857 !important;
   box-shadow: 2px 3px 15px rgba(16, 185, 129, 0.3);
   border: 1px solid rgba(52, 211, 153, 0.3);
 }
+
 [data-diary-theme="mint-fresh"] .diary-page p {
   color: #064e3b !important;
 }
