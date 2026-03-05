@@ -4,22 +4,18 @@ import { supabase } from '../lib/supabase'
 import { useAuth } from '../context/AuthContext'
 
 const THEMES = [
-    { id: 'strawberry-milk', name: 'Strawberry Milk 🍓', color: '#ffb7b2', preview: 'linear-gradient(135deg, #fff0f5, #ffb7b2)' },
-    { id: 'matcha-latte', name: 'Matcha Latte 🍵', color: '#c1e1c1', preview: 'linear-gradient(135deg, #f0fff0, #c1e1c1)' },
-    { id: 'vanilla-girl', name: 'Vanilla Girl 🍦', color: '#d2b48c', preview: 'linear-gradient(135deg, #fffbf0, #f5e6d3)' },
-    { id: 'coquette-bows', name: 'Coquette Bows 🎀', color: '#ffc0cb', preview: 'linear-gradient(135deg, #fff0f5, #ffb6c1)' },
-    { id: 'lavender-haze', name: 'Lavender Haze 💜', color: '#cda434', preview: 'linear-gradient(135deg, #f8f8ff, #e6e6fa)' },
-    { id: 'pixie-dust', name: 'Pixie Dust ✨', color: '#ff69b4', preview: 'linear-gradient(135deg, #ffb6c1, #ff69b4)' },
-    { id: 'ocean-pearl', name: 'Ocean Pearl 🐚', color: '#add8e6', preview: 'linear-gradient(135deg, #f0ffff, #e0ffff)' },
-    { id: 'golden-hour', name: 'Golden Hour 🌅', color: '#ffb347', preview: 'linear-gradient(135deg, #fff8dc, #ffdab9)' },
     { id: 'midnight-rose', name: 'Midnight Rose 🌹', color: '#b76e79', preview: 'linear-gradient(135deg, #1a1618, #2a1f22)' },
-    { id: 'moonlight-magic', name: 'Moon Magic 🌙', color: '#9370db', preview: 'linear-gradient(135deg, #2c1b4d, #4a3b69)' },
-    { id: 'cherry-blossom', name: 'Cherry Blossom 🌸', color: '#ffb7c5', preview: 'linear-gradient(135deg, #fff0f5, #ffe4e1)' },
-    { id: 'cottagecore', name: 'Cottagecore 🍄', color: '#8fbc8f', preview: 'linear-gradient(135deg, #f5f5dc, #ccd5ae)' },
-    { id: 'dark-academia', name: 'Dark Academia 📚', color: 'rgb(51, 40, 31)', preview: 'linear-gradient(135deg, #2b221a, #1a1410)' },
-    { id: 'starry-night', name: 'Starry Night 🌌', color: '#191970', preview: 'linear-gradient(135deg, #0f1026, #050614)' },
-    { id: 'vampire-chic', name: 'Vampire Chic 🦇', color: '#4a0000', preview: 'linear-gradient(135deg, #1f0101, #0a0000)' },
-    { id: 'obsidian-glow', name: 'Obsidian Glow 🖤', color: '#111111', preview: 'linear-gradient(135deg, #111111, #000000)' }
+    { id: 'vintage-parchment', name: 'Vintage Parchment 📜', color: '#8c7355', preview: 'linear-gradient(135deg, #f5ead6, #e6d5b8)' },
+    { id: 'emerald-forest', name: 'Emerald Forest 🌲', color: '#2e4f32', preview: 'linear-gradient(135deg, #f0fdf4, #dcfce7)' },
+    { id: 'ocean-breeze', name: 'Ocean Breeze 🌊', color: '#0ea5e9', preview: 'linear-gradient(135deg, #f0f9ff, #e0f2fe)' },
+    { id: 'sunset-glow', name: 'Sunset Glow 🌅', color: '#f97316', preview: 'linear-gradient(135deg, #fff7ed, #ffedd5)' },
+    { id: 'lavender-dream', name: 'Lavender Dream 💜', color: '#a855f7', preview: 'linear-gradient(135deg, #faf5ff, #f3e8ff)' },
+    { id: 'golden-hour', name: 'Golden Hour 🌟', color: '#eab308', preview: 'linear-gradient(135deg, #fefce8, #fef9c3)' },
+    { id: 'cherry-blossom', name: 'Cherry Blossom 🌸', color: '#ec4899', preview: 'linear-gradient(135deg, #fdf2f8, #fce7f3)' },
+    { id: 'arctic-frost', name: 'Arctic Frost ❄️', color: '#06b6d4', preview: 'linear-gradient(135deg, #ecfeff, #cffafe)' },
+    { id: 'autumn-leaves', name: 'Autumn Leaves 🍂', color: '#b45309', preview: 'linear-gradient(135deg, #fffbeb, #fef3c7)' },
+    { id: 'cosmic-purple', name: 'Cosmic Purple 🌌', color: '#6366f1', preview: 'linear-gradient(135deg, #1e1b4b, #312e81)' },
+    { id: 'mint-fresh', name: 'Mint Fresh 🌿', color: '#10b981', preview: 'linear-gradient(135deg, #f0fdf4, #d1fae5)' }
 ]
 
 const FONTS = [

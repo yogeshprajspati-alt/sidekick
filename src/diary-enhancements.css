@@ -86,333 +86,200 @@ textarea {
 
 /* ── Theme Overrides ── */
 
-/* Strawberry Milk */
-[data-diary-theme="strawberry-milk"] body {
-  background: linear-gradient(135deg, #fff0f5 0%, #ffb7b2 100%) !important;
+/* 1. Midnight Rose */
+[data-diary-theme="midnight-rose"] body {
+  /* Defaults to global variables. */
+}
+[data-diary-theme="midnight-rose"] .diary-page {
+  /* Defaults to global variables. */
 }
 
-[data-diary-theme="strawberry-milk"] body::before {
-  background: radial-gradient(circle, rgba(255, 183, 178, 0.4) 0%, transparent 70%);
+/* 2. Vintage Parchment */
+[data-diary-theme="vintage-parchment"] body {
+  background: linear-gradient(135deg, #f5ead6 0%, #e6d5b8 100%) !important;
+}
+[data-diary-theme="vintage-parchment"] body::before {
+  background: radial-gradient(circle, rgba(140, 115, 85, 0.2) 0%, transparent 70%);
+}
+[data-diary-theme="vintage-parchment"] .diary-page {
+  background: #fffcf5;
+  color: #5c4033 !important;
+  box-shadow: 2px 3px 15px rgba(140, 115, 85, 0.3);
+  border: 1px solid rgba(140, 115, 85, 0.2);
+}
+[data-diary-theme="vintage-parchment"] .diary-page p {
+  color: #4a3627 !important;
 }
 
-[data-diary-theme="strawberry-milk"] .diary-page {
-  background: #fffcfd;
-  color: #c94f58 !important;
-  box-shadow: 2px 3px 15px rgba(255, 183, 178, 0.4);
+/* 3. Emerald Forest */
+[data-diary-theme="emerald-forest"] body {
+  background: linear-gradient(135deg, #134e4a 0%, #064e3b 100%) !important;
+}
+[data-diary-theme="emerald-forest"] body::before {
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, transparent 70%);
+}
+[data-diary-theme="emerald-forest"] .diary-page {
+  background: #f0fdf4;
+  color: #065f46 !important;
+  box-shadow: 2px 3px 15px rgba(6, 95, 70, 0.4);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+[data-diary-theme="emerald-forest"] .diary-page p {
+  color: #047857 !important;
 }
 
-[data-diary-theme="strawberry-milk"] .diary-page p {
-  color: #b23b44 !important;
+/* 4. Ocean Breeze */
+[data-diary-theme="ocean-breeze"] body {
+  background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%) !important;
+}
+[data-diary-theme="ocean-breeze"] body::before {
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.2) 0%, transparent 70%);
+}
+[data-diary-theme="ocean-breeze"] .diary-page {
+  background: #f0f9ff;
+  color: #0369a1 !important;
+  box-shadow: 2px 3px 15px rgba(14, 165, 233, 0.3);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+}
+[data-diary-theme="ocean-breeze"] .diary-page p {
+  color: #075985 !important;
 }
 
-/* Matcha Latte */
-[data-diary-theme="matcha-latte"] body {
-  background: linear-gradient(135deg, #f0fff0 0%, #c1e1c1 100%) !important;
+/* 5. Sunset Glow */
+[data-diary-theme="sunset-glow"] body {
+  background: linear-gradient(135deg, #ffedd5 0%, #fdba74 100%) !important;
+}
+[data-diary-theme="sunset-glow"] body::before {
+  background: radial-gradient(circle, rgba(249, 115, 22, 0.2) 0%, transparent 70%);
+}
+[data-diary-theme="sunset-glow"] .diary-page {
+  background: #fff8f1;
+  color: #c2410c !important;
+  box-shadow: 2px 3px 15px rgba(249, 115, 22, 0.3);
+  border: 1px solid rgba(251, 146, 60, 0.3);
+}
+[data-diary-theme="sunset-glow"] .diary-page p {
+  color: #9a3412 !important;
 }
 
-[data-diary-theme="matcha-latte"] body::before {
-  background: radial-gradient(circle, rgba(193, 225, 193, 0.4) 0%, transparent 70%);
+/* 6. Lavender Dream */
+[data-diary-theme="lavender-dream"] body {
+  background: linear-gradient(135deg, #f3e8ff 0%, #d8b4fe 100%) !important;
+}
+[data-diary-theme="lavender-dream"] body::before {
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.2) 0%, transparent 70%);
+}
+[data-diary-theme="lavender-dream"] .diary-page {
+  background: #faf5ff;
+  color: #6b21a8 !important;
+  box-shadow: 2px 3px 15px rgba(168, 85, 247, 0.3);
+  border: 1px solid rgba(192, 132, 252, 0.3);
+}
+[data-diary-theme="lavender-dream"] .diary-page p {
+  color: #581c87 !important;
 }
 
-[data-diary-theme="matcha-latte"] .diary-page {
-  background: #fdfdfa;
-  color: #3f6844 !important;
-  box-shadow: 2px 3px 15px rgba(193, 225, 193, 0.4);
-}
-
-[data-diary-theme="matcha-latte"] .diary-page p {
-  color: #2e4f32 !important;
-}
-
-/* Vanilla Girl */
-[data-diary-theme="vanilla-girl"] body {
-  background: linear-gradient(135deg, #fffbf0 0%, #f5e6d3 100%) !important;
-}
-
-[data-diary-theme="vanilla-girl"] body::before {
-  background: radial-gradient(circle, rgba(245, 230, 211, 0.5) 0%, transparent 70%);
-}
-
-[data-diary-theme="vanilla-girl"] .diary-page {
-  background: #fffffb;
-  color: #8c7355 !important;
-  box-shadow: 2px 3px 15px rgba(210, 180, 140, 0.3);
-}
-
-[data-diary-theme="vanilla-girl"] .diary-page p {
-  color: #7a6143 !important;
-}
-
-/* Coquette Bows */
-[data-diary-theme="coquette-bows"] body {
-  background: linear-gradient(135deg, #fff0f5 0%, #ffb6c1 100%) !important;
-}
-
-[data-diary-theme="coquette-bows"] body::before {
-  background: radial-gradient(circle, rgba(255, 192, 203, 0.4) 0%, transparent 70%);
-}
-
-[data-diary-theme="coquette-bows"] .diary-page {
-  background: #fffafa;
-  color: #c5536b !important;
-  box-shadow: 2px 3px 15px rgba(255, 182, 193, 0.4);
-  border: 1px dashed rgba(255, 192, 203, 1);
-}
-
-[data-diary-theme="coquette-bows"] .diary-page p {
-  color: #a94156 !important;
-}
-
-/* Lavender Haze */
-[data-diary-theme="lavender-haze"] body {
-  background: linear-gradient(135deg, #f8f8ff 0%, #e6e6fa 100%) !important;
-}
-
-[data-diary-theme="lavender-haze"] body::before {
-  background: radial-gradient(circle, rgba(230, 230, 250, 0.8) 0%, transparent 70%);
-}
-
-[data-diary-theme="lavender-haze"] .diary-page {
-  background: #ffffff;
-  color: #6a5acd !important;
-  box-shadow: 2px 3px 15px rgba(230, 230, 250, 0.6);
-}
-
-[data-diary-theme="lavender-haze"] .diary-page p {
-  color: #483d8b !important;
-}
-
-/* Pixie Dust */
-[data-diary-theme="pixie-dust"] body {
-  background: linear-gradient(135deg, #ffb6c1 0%, #ff69b4 100%) !important;
-}
-
-[data-diary-theme="pixie-dust"] body::before {
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, transparent 70%);
-}
-
-[data-diary-theme="pixie-dust"] .diary-page {
-  background: #fffcfd;
-  color: #c71585 !important;
-  box-shadow: 0px 4px 20px rgba(255, 105, 180, 0.4);
-  position: relative;
-}
-
-[data-diary-theme="pixie-dust"] .diary-page::before {
-  content: "✨";
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  font-size: 16px;
-  opacity: 0.8;
-}
-
-[data-diary-theme="pixie-dust"] .diary-page::after {
-  content: "✨";
-  position: absolute;
-  bottom: 10px;
-  left: 15px;
-  font-size: 12px;
-  opacity: 0.6;
-}
-
-[data-diary-theme="pixie-dust"] .diary-page p {
-  color: #db2777 !important;
-}
-
-/* Ocean Pearl */
-[data-diary-theme="ocean-pearl"] body {
-  background: linear-gradient(135deg, #f0ffff 0%, #e0ffff 100%) !important;
-}
-
-[data-diary-theme="ocean-pearl"] body::before {
-  background: radial-gradient(circle, rgba(173, 216, 230, 0.4) 0%, transparent 70%);
-}
-
-[data-diary-theme="ocean-pearl"] .diary-page {
-  background: #fbffff;
-  color: #4682b4 !important;
-  box-shadow: 2px 3px 15px rgba(173, 216, 230, 0.4);
-}
-
-[data-diary-theme="ocean-pearl"] .diary-page p {
-  color: #366185 !important;
-}
-
-/* Golden Hour */
+/* 7. Golden Hour */
 [data-diary-theme="golden-hour"] body {
-  background: linear-gradient(135deg, #fff8dc 0%, #ffdab9 100%) !important;
+  background: linear-gradient(135deg, #fef9c3 0%, #fde047 100%) !important;
 }
-
 [data-diary-theme="golden-hour"] body::before {
-  background: radial-gradient(circle, rgba(255, 218, 185, 0.6) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(234, 179, 8, 0.2) 0%, transparent 70%);
 }
-
 [data-diary-theme="golden-hour"] .diary-page {
-  background: #fffef8;
-  color: #cd853f !important;
-  box-shadow: 2px 3px 15px rgba(255, 179, 71, 0.3);
+  background: #fefce8;
+  color: #a16207 !important;
+  box-shadow: 2px 3px 15px rgba(234, 179, 8, 0.3);
+  border: 1px solid rgba(250, 204, 21, 0.3);
 }
-
 [data-diary-theme="golden-hour"] .diary-page p {
-  color: #b87333 !important;
+  color: #854d0e !important;
 }
 
-/* Moonlight Magic */
-[data-diary-theme="moonlight-magic"] body {
-  background: linear-gradient(135deg, #2c1b4d 0%, #4a3b69 100%) !important;
-}
-
-[data-diary-theme="moonlight-magic"] body::before {
-  background: radial-gradient(circle, rgba(147, 112, 219, 0.2) 0%, transparent 70%);
-}
-
-[data-diary-theme="moonlight-magic"] .diary-page {
-  background: #fdfaff;
-  color: #483d8b !important;
-  box-shadow: 2px 3px 15px rgba(147, 112, 219, 0.3);
-}
-
-[data-diary-theme="moonlight-magic"] .diary-page p {
-  color: #3a2e70 !important;
-}
-
-/* Cherry Blossom */
+/* 8. Cherry Blossom */
 [data-diary-theme="cherry-blossom"] body {
-  background: linear-gradient(135deg, #ffe4e1 0%, #ffb7c5 100%) !important;
+  background: linear-gradient(135deg, #fce7f3 0%, #f9a8d4 100%) !important;
 }
-
 [data-diary-theme="cherry-blossom"] body::before {
-  background: radial-gradient(circle, rgba(255, 182, 193, 0.4) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(236, 72, 153, 0.2) 0%, transparent 70%);
 }
-
 [data-diary-theme="cherry-blossom"] .diary-page {
-  background: #fffafa;
-  color: #d1495b !important;
-  box-shadow: 2px 3px 15px rgba(255, 183, 197, 0.4);
+  background: #fdf2f8;
+  color: #be185d !important;
+  box-shadow: 2px 3px 15px rgba(236, 72, 153, 0.3);
+  border: 1px solid rgba(244, 114, 182, 0.3);
 }
-
 [data-diary-theme="cherry-blossom"] .diary-page p {
-  color: #c24050 !important;
+  color: #9d174d !important;
 }
 
-/* Cottagecore */
-[data-diary-theme="cottagecore"] body {
-  background: linear-gradient(135deg, #f5f5dc 0%, #ccd5ae 100%) !important;
+/* 9. Arctic Frost */
+[data-diary-theme="arctic-frost"] body {
+  background: linear-gradient(135deg, #cffafe 0%, #67e8f9 100%) !important;
+}
+[data-diary-theme="arctic-frost"] body::before {
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.2) 0%, transparent 70%);
+}
+[data-diary-theme="arctic-frost"] .diary-page {
+  background: #ecfeff;
+  color: #0e7490 !important;
+  box-shadow: 2px 3px 15px rgba(6, 182, 212, 0.3);
+  border: 1px solid rgba(34, 211, 238, 0.3);
+}
+[data-diary-theme="arctic-frost"] .diary-page p {
+  color: #155e75 !important;
 }
 
-[data-diary-theme="cottagecore"] body::before {
-  background: radial-gradient(circle, rgba(143, 188, 143, 0.3) 0%, transparent 70%);
+/* 10. Autumn Leaves */
+[data-diary-theme="autumn-leaves"] body {
+  background: linear-gradient(135deg, #fef3c7 0%, #fcd34d 100%) !important;
+}
+[data-diary-theme="autumn-leaves"] body::before {
+  background: radial-gradient(circle, rgba(180, 83, 9, 0.2) 0%, transparent 70%);
+}
+[data-diary-theme="autumn-leaves"] .diary-page {
+  background: #fffbeb;
+  color: #92400e !important;
+  box-shadow: 2px 3px 15px rgba(180, 83, 9, 0.3);
+  border: 1px solid rgba(251, 191, 36, 0.5);
+}
+[data-diary-theme="autumn-leaves"] .diary-page p {
+  color: #78350f !important;
 }
 
-[data-diary-theme="cottagecore"] .diary-page {
-  background: #fbfcfa;
-  color: #556b2f !important;
-  box-shadow: 2px 3px 15px rgba(143, 188, 143, 0.3);
+/* 11. Cosmic Purple */
+[data-diary-theme="cosmic-purple"] body {
+  background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%) !important;
 }
-
-[data-diary-theme="cottagecore"] .diary-page p {
-  color: #3b4d20 !important;
+[data-diary-theme="cosmic-purple"] body::before {
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
 }
-
-/* Dark Academia */
-[data-diary-theme="dark-academia"] body {
-  background: linear-gradient(135deg, #1a1614 0%, #0d0b0a 100%) !important;
-}
-
-[data-diary-theme="dark-academia"] body::before {
-  background: radial-gradient(circle, rgba(82, 63, 49, 0.1) 0%, transparent 70%);
-}
-
-[data-diary-theme="dark-academia"] .diary-page {
-  background: #1e1916;
-  color: #d1c1a3 !important;
-  box-shadow: 2px 3px 15px rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(133, 107, 85, 0.2);
-}
-
-[data-diary-theme="dark-academia"] .diary-page p {
-  color: #bda27e !important;
-}
-
-/* Starry Night */
-[data-diary-theme="starry-night"] body {
-  background: linear-gradient(135deg, #090a12 0%, #02030a 100%) !important;
-}
-
-[data-diary-theme="starry-night"] body::before {
-  background: radial-gradient(circle, rgba(255, 235, 133, 0.05) 0%, transparent 70%);
-}
-
-[data-diary-theme="starry-night"] body::after {
-  background: radial-gradient(circle, rgba(122, 168, 255, 0.05) 0%, transparent 70%);
-}
-
-[data-diary-theme="starry-night"] .diary-page {
-  background: #0d0f1a;
-  color: #e0e5ff !important;
+[data-diary-theme="cosmic-purple"] .diary-page {
+  background: #2e2854;
+  color: #c7d2fe !important;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
-  border: 1px solid rgba(100, 130, 255, 0.15);
-  position: relative;
+  border: 1px solid rgba(99, 102, 241, 0.3);
+}
+[data-diary-theme="cosmic-purple"] .diary-page p {
+  color: #a5b4fc !important;
 }
 
-[data-diary-theme="starry-night"] .diary-page::before {
-  content: "✦";
-  position: absolute;
-  top: 12px;
-  right: 20px;
-  font-size: 14px;
-  opacity: 0.3;
-  color: #ffeb85;
+/* 12. Mint Fresh */
+[data-diary-theme="mint-fresh"] body {
+  background: linear-gradient(135deg, #d1fae5 0%, #6ee7b7 100%) !important;
 }
-
-[data-diary-theme="starry-night"] .diary-page p {
-  color: #b3c0ff !important;
+[data-diary-theme="mint-fresh"] body::before {
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.2) 0%, transparent 70%);
 }
-
-/* Vampire Chic */
-[data-diary-theme="vampire-chic"] body {
-  background: linear-gradient(135deg, #110000 0%, #050000 100%) !important;
+[data-diary-theme="mint-fresh"] .diary-page {
+  background: #f0fdf4;
+  color: #047857 !important;
+  box-shadow: 2px 3px 15px rgba(16, 185, 129, 0.3);
+  border: 1px solid rgba(52, 211, 153, 0.3);
 }
-
-[data-diary-theme="vampire-chic"] body::before {
-  background: radial-gradient(circle, rgba(150, 0, 24, 0.1) 0%, transparent 70%);
+[data-diary-theme="mint-fresh"] .diary-page p {
+  color: #064e3b !important;
 }
-
-[data-diary-theme="vampire-chic"] .diary-page {
-  background: #140505;
-  color: #dbcccc !important;
-  box-shadow: 2px 3px 15px rgba(150, 0, 0, 0.3);
-  border: 1px solid rgba(150, 0, 24, 0.3);
-}
-
-[data-diary-theme="vampire-chic"] .diary-page p {
-  color: #bd3131 !important;
-}
-
-/* Obsidian Glow */
-[data-diary-theme="obsidian-glow"] body {
-  background: linear-gradient(135deg, #0a0a0a 0%, #000000 100%) !important;
-}
-
-[data-diary-theme="obsidian-glow"] body::before {
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.03) 0%, transparent 70%);
-}
-
-[data-diary-theme="obsidian-glow"] .diary-page {
-  background: #111111;
-  color: #e6e6e6 !important;
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
-  /* Smoother corner for an obsidian feel */
-}
-
-[data-diary-theme="obsidian-glow"] .diary-page p {
-  color: #aaaaaa !important;
-}
-
-/* Defaults for Midnight Rose are kept standard */
 
 /* Admin highlight styles */
 .admin-override-badge {
