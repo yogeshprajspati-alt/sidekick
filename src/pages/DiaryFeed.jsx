@@ -552,7 +552,7 @@ export default function DiaryFeed() {
                                         marginTop: 12, textAlign: 'center', fontSize: 10,
                                         color: 'rgba(183,110,121,0.25)', fontFamily: 'var(--font-body)',
                                         letterSpacing: '0.04em',
-                                    }}>Made with 💕 for just you two</p>
+                                    }}>Just for prachiiee🎀</p>
                                 </motion.div>
                             </motion.div>
                         </>
