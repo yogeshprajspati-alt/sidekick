@@ -9,19 +9,17 @@ import { AdminProvider } from './context/AdminContext'
 import AdminFeed from './pages/AdminFeed'
 import ResetPasswordPage from './pages/ResetPasswordPage'
 
-function isResetPasswordFlow() {
-    const hash = window.location.hash
-    return hash.includes('access_token') && hash.includes('type=recovery')
-}
-
 function AppContent() {
     const { user, loading, isAdmin, isPasswordRecovery } = useAuth()
     const { isDecoyMode } = useDecoyMode()
 
-    // Reset password flow — highest priority, before everything
-    if (isPasswordRecovery || isResetPasswordFlow()) {
+    // Password reset flow — highest priority
+    // isPasswordRecovery is initialized from sessionStorage so it's true
+    // immediately on first render, before onAuthStateChange fires
+    if (isPasswordRecovery) {
         return (
             <ResetPasswordPage onDone={() => {
+                sessionStorage.removeItem('sidekick_password_recovery')
                 window.location.hash = ''
                 window.location.reload()
             }} />
@@ -172,4 +170,3 @@ export default function App() {
         </ThemeProvider>
     )
 }
-

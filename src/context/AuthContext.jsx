@@ -33,7 +33,9 @@ async function withRetry(fn, retries = 2, delayMs = 1500) {
 export function AuthProvider({ children }) {
     const [user, setUser] = useState(null)
     const [loading, setLoading] = useState(true)
-    const [isPasswordRecovery, setIsPasswordRecovery] = useState(false)
+    const [isPasswordRecovery, setIsPasswordRecovery] = useState(
+        () => sessionStorage.getItem('sidekick_password_recovery') === '1'
+    )
 
     const isAdmin = user?.email === ADMIN_EMAIL
 
@@ -59,9 +61,11 @@ export function AuthProvider({ children }) {
         const { data: { subscription } } = supabase.auth.onAuthStateChange(
             (event, session) => {
                 if (event === 'PASSWORD_RECOVERY') {
+                    sessionStorage.setItem('sidekick_password_recovery', '1')
                     setIsPasswordRecovery(true)
                     setUser(session?.user ?? null)
                 } else {
+                    sessionStorage.removeItem('sidekick_password_recovery')
                     setIsPasswordRecovery(false)
                     setUser(session?.user ?? null)
                 }
