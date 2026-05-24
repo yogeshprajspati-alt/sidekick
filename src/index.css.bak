@@ -1,0 +1,739 @@
+@import './diary-enhancements.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================ */
+/* Sidekick v2 — Global Styles                 */
+/* ============================================ */
+
+:root {
+  --rose-gold: #b76e79;
+  --rose-gold-light: #e6b8c0;
+  --warm-gold: #d4af37;
+  --deep-dark: #0a0a0f;
+  --glass-bg: rgba(255, 255, 255, 0.04);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-hover: rgba(255, 255, 255, 0.07);
+  --paper-cream: #fdf6ec;
+  --paper-dark: #f5ead6;
+  --ink-brown: #3a2e2f;
+  --line-color: rgba(180, 160, 140, 0.2);
+  --margin-red: rgba(210, 80, 80, 0.25);
+
+  /* ── Text scale (dark mode defaults) ── */
+  --t-primary:  #e8e0e2;          /* inputs, body text */
+  --t-high:     rgba(232,224,226,0.92);
+  --t-med:      rgba(232,224,226,0.60);
+  --t-low:      rgba(232,224,226,0.38);
+  --t-faint:    rgba(232,224,226,0.22);
+  --t-ghost:    rgba(232,224,226,0.13);
+
+  /* ── Surface scale (dark mode defaults) ── */
+  --s-glass:    rgba(255,255,255,0.04);
+  --s-glass2:   rgba(255,255,255,0.07);
+  --s-border:   rgba(255,255,255,0.07);
+  --s-border2:  rgba(255,255,255,0.10);
+}
+
+/* ============================================ */
+/* Light Mode — Warm Ivory & Rose Gold          */
+/* ============================================ */
+[data-theme="light"] {
+  /* Palette override */
+  --deep-dark:      #fdf8f2;
+  --glass-bg:       rgba(255, 248, 240, 0.75);
+  --glass-border:   rgba(183, 110, 121, 0.18);
+  --glass-hover:    rgba(183, 110, 121, 0.10);
+  --paper-cream:    #fffdf9;
+  --paper-dark:     #f5e8d8;
+  --ink-brown:      #3a2426;
+  --line-color:     rgba(183, 110, 121, 0.10);
+  --margin-red:     rgba(183, 110, 121, 0.30);
+
+  /* Semantic surface tokens */
+  --surface-card:   rgba(255, 251, 245, 0.88);
+  --surface-raised: rgba(255, 253, 249, 0.95);
+  --text-primary:   #2e1a1d;
+  --text-secondary: #7a4f55;
+  --text-muted:     rgba(122, 79, 85, 0.55);
+  --accent-glow:    rgba(183, 110, 121, 0.15);
+  --gold-glow:      rgba(212, 175, 55, 0.12);
+
+  /* ── Text scale overrides (warm ink on ivory) ── */
+  --t-primary:  #2e1a1d;
+  --t-high:     rgba(46, 26, 29, 0.90);
+  --t-med:      rgba(46, 26, 29, 0.65);
+  --t-low:      rgba(46, 26, 29, 0.48);
+  --t-faint:    rgba(46, 26, 29, 0.32);
+  --t-ghost:    rgba(46, 26, 29, 0.20);
+
+  /* ── Surface scale overrides ── */
+  --s-glass:    rgba(255, 250, 245, 0.78);
+  --s-glass2:   rgba(255, 248, 242, 0.88);
+  --s-border:   rgba(183, 110, 121, 0.14);
+  --s-border2:  rgba(183, 110, 121, 0.22);
+}
+
+/* Body — layered warm-ivory mesh gradient */
+[data-theme="light"] body {
+  background:
+    radial-gradient(ellipse 80% 60% at 15% 10%,  rgba(255, 220, 210, 0.35) 0%, transparent 60%),
+    radial-gradient(ellipse 70% 50% at 90% 85%,  rgba(212, 175, 55, 0.18)  0%, transparent 55%),
+    radial-gradient(ellipse 90% 70% at 50% 50%,  rgba(253, 240, 230, 0.60) 0%, transparent 80%),
+    linear-gradient(160deg, #fdf4ec 0%, #faf0e8 40%, #fdf6f0 70%, #fef9f4 100%);
+  color: var(--text-primary);
+}
+
+/* Ambient orbs — punchy in daylight */
+[data-theme="light"] body::before {
+  background: radial-gradient(circle, rgba(183, 110, 121, 0.18) 0%, transparent 65%);
+  filter: blur(40px);
+}
+
+[data-theme="light"] body::after {
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.14) 0%, transparent 65%);
+  filter: blur(50px);
+}
+
+/* Glass cards — frosted warm white with coloured border */
+[data-theme="light"] .glass-card {
+  background: var(--surface-card);
+  border-color: var(--glass-border);
+  box-shadow:
+    0 2px 8px  rgba(183, 110, 121, 0.08),
+    0 8px 30px rgba(183, 110, 121, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85);
+}
+
+[data-theme="light"] .glass-card-hover:hover {
+  background: var(--surface-raised);
+  border-color: var(--rose-gold);
+  box-shadow:
+    0 4px 16px rgba(183, 110, 121, 0.14),
+    0 12px 40px rgba(183, 110, 121, 0.10),
+    inset 0 1px 0 rgba(255, 255, 255, 0.90);
+}
+
+/* Inputs — warm white with rose-gold focus ring */
+[data-theme="light"] .glass-input {
+  background: rgba(255, 253, 250, 0.90);
+  border-color: rgba(183, 110, 121, 0.20);
+  color: var(--text-primary);
+  box-shadow: 0 1px 4px rgba(183, 110, 121, 0.06), inset 0 1px 2px rgba(0,0,0,0.03);
+}
+
+[data-theme="light"] .glass-input::placeholder {
+  color: var(--text-muted);
+}
+
+[data-theme="light"] .glass-input:focus {
+  border-color: var(--rose-gold);
+  background: #fffdfb;
+  box-shadow:
+    0 0 0 3px rgba(183, 110, 121, 0.12),
+    0 2px 8px  rgba(183, 110, 121, 0.10);
+}
+
+/* Diary holes — inked punch-through */
+[data-theme="light"] .diary-hole {
+  background: #e4d3cc;
+  border-color: rgba(160, 120, 110, 0.35);
+  box-shadow: inset 0 1px 3px rgba(100, 60, 55, 0.20);
+}
+
+/* Diary page — brighter paper, richer ruled lines */
+[data-theme="light"] .diary-page {
+  background: var(--paper-cream);
+  box-shadow:
+    2px 3px 16px rgba(183, 110, 121, 0.12),
+    0  1px 0   rgba(255, 255, 255, 0.90) inset,
+    inset 0 0 40px rgba(255, 235, 220, 0.15);
+}
+
+/* Date separator line — rose-gold tinted */
+[data-theme="light"] .diary-date-separator::before,
+[data-theme="light"] .diary-date-separator::after {
+  background: linear-gradient(to right, transparent, rgba(183, 110, 121, 0.22), transparent);
+}
+
+/* Scrollbar */
+[data-theme="light"] ::-webkit-scrollbar-thumb {
+  background: rgba(183, 110, 121, 0.22);
+}
+
+[data-theme="light"] ::-webkit-scrollbar-thumb:hover {
+  background: rgba(183, 110, 121, 0.45);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   INLINE-STYLE OVERRIDES
+   Components hard-code rgba(255,255,255,X) for dark mode.
+   These rules intercept every opacity tier found in the codebase
+   and remap to warm-ink equivalents so text is readable on ivory.
+   ───────────────────────────────────────────────────────────── */
+
+/* Input text color (hard-coded #e8e0e2 in LoginPage inputs) */
+[data-theme="light"] input,
+[data-theme="light"] textarea {
+  color: var(--t-primary) !important;
+}
+[data-theme="light"] input::placeholder,
+[data-theme="light"] textarea::placeholder {
+  color: var(--t-low) !important;
+  opacity: 1 !important;
+}
+
+/* ── White text at various opacities → warm ink ── */
+[data-theme="light"] [style*="color: rgba(255, 255, 255, 0.95)"],
+[data-theme="light"] [style*="color: rgba(255,255,255,0.95)"] { color: var(--t-high)   !important; }
+
+[data-theme="light"] [style*="color: rgba(255, 255, 255, 0.9)"],
+[data-theme="light"] [style*="color: rgba(255,255,255,0.9)"]  { color: var(--t-high)   !important; }
+
+[data-theme="light"] [style*="color: rgba(255, 255, 255, 0.8)"],
+[data-theme="light"] [style*="color: rgba(255,255,255,0.8)"]  { color: var(--t-high)   !important; }
+
+[data-theme="light"] [style*="color: rgba(255, 255, 255, 0.7)"],
+[data-theme="light"] [style*="color: rgba(255,255,255,0.7)"]  { color: var(--t-high)   !important; }
+
+[data-theme="light"] [style*="color: rgba(255, 255, 255, 0.6)"],
+[data-theme="light"] [style*="color: rgba(255,255,255,0.6)"]  { color: var(--t-med)    !important; }
+
+[data-theme="light"] [style*="color: rgba(255, 255, 255, 0.55)"],
+[data-theme="light"] [style*="color: rgba(255,255,255,0.55)"] { color: var(--t-med)    !important; }
+
+[data-theme="light"] [style*="color: rgba(255, 255, 255, 0.5)"],
+[data-theme="light"] [style*="color: rgba(255,255,255,0.5)"]  { color: var(--t-med)    !important; }
+
+[data-theme="light"] [style*="color: rgba(255, 255, 255, 0.4)"],
+[data-theme="light"] [style*="color: rgba(255,255,255,0.4)"]  { color: var(--t-low)    !important; }
+
+[data-theme="light"] [style*="color: rgba(255, 255, 255, 0.35)"],
+[data-theme="light"] [style*="color: rgba(255,255,255,0.35)"] { color: var(--t-low)    !important; }
+
+[data-theme="light"] [style*="color: rgba(255, 255, 255, 0.3)"],
+[data-theme="light"] [style*="color: rgba(255,255,255,0.3)"]  { color: var(--t-low)    !important; }
+
+[data-theme="light"] [style*="color: rgba(255, 255, 255, 0.25)"],
+[data-theme="light"] [style*="color: rgba(255,255,255,0.25)"] { color: var(--t-faint)  !important; }
+
+[data-theme="light"] [style*="color: rgba(255, 255, 255, 0.2)"],
+[data-theme="light"] [style*="color: rgba(255,255,255,0.2)"]  { color: var(--t-faint)  !important; }
+
+[data-theme="light"] [style*="color: rgba(255, 255, 255, 0.15)"],
+[data-theme="light"] [style*="color: rgba(255,255,255,0.15)"] { color: var(--t-faint)  !important; }
+
+[data-theme="light"] [style*="color: rgba(255, 255, 255, 0.12)"],
+[data-theme="light"] [style*="color: rgba(255,255,255,0.12)"] { color: var(--t-ghost)  !important; }
+
+[data-theme="light"] [style*="color: #e8e0e2"] { color: var(--t-primary) !important; }
+
+/* Rose-gold light text (e.g. disabled/inactive states using rgba(230,184,192)) */
+[data-theme="light"] [style*="color: rgba(230,184,192,0.25)"],
+[data-theme="light"] [style*="color: rgba(230, 184, 192, 0.25)"] { color: var(--t-faint) !important; }
+
+[data-theme="light"] [style*="color: rgba(230,184,192,0.75)"],
+[data-theme="light"] [style*="color: rgba(230, 184, 192, 0.75)"] { color: var(--rose-gold) !important; }
+
+/* ── Glass backgrounds → warm frosted white ── */
+[data-theme="light"] [style*="background: rgba(255, 255, 255, 0.04)"],
+[data-theme="light"] [style*="background: rgba(255,255,255,0.04)"],
+[data-theme="light"] [style*="background: rgba(255, 255, 255, 0.02)"],
+[data-theme="light"] [style*="background: rgba(255,255,255,0.02)"],
+[data-theme="light"] [style*="background: rgba(255, 255, 255, 0.03)"],
+[data-theme="light"] [style*="background: rgba(255,255,255,0.03)"] {
+  background: var(--s-glass) !important;
+}
+
+[data-theme="light"] [style*="background: rgba(255, 255, 255, 0.05)"],
+[data-theme="light"] [style*="background: rgba(255,255,255,0.05)"],
+[data-theme="light"] [style*="background: rgba(255, 255, 255, 0.06)"],
+[data-theme="light"] [style*="background: rgba(255,255,255,0.06)"],
+[data-theme="light"] [style*="background: rgba(255, 255, 255, 0.07)"],
+[data-theme="light"] [style*="background: rgba(255,255,255,0.07)"] {
+  background: var(--s-glass2) !important;
+}
+
+/* ── Glass borders → rose-gold tinted ── */
+[data-theme="light"] [style*="border: 1px solid rgba(255, 255, 255, 0.05)"],
+[data-theme="light"] [style*="border: 1px solid rgba(255,255,255,0.05)"],
+[data-theme="light"] [style*="border: 1px solid rgba(255, 255, 255, 0.06)"],
+[data-theme="light"] [style*="border: 1px solid rgba(255,255,255,0.06)"],
+[data-theme="light"] [style*="border: 1px solid rgba(255, 255, 255, 0.07)"],
+[data-theme="light"] [style*="border: 1px solid rgba(255,255,255,0.07)"],
+[data-theme="light"] [style*="border: 1px solid rgba(255, 255, 255, 0.08)"],
+[data-theme="light"] [style*="border: 1px solid rgba(255,255,255,0.08)"],
+[data-theme="light"] [style*="border: 1px solid rgba(255, 255, 255, 0.1)"],
+[data-theme="light"] [style*="border: 1px solid rgba(255,255,255,0.1)"] {
+  border-color: var(--s-border) !important;
+}
+
+/* ── Dark overlay backdrops (modals/overlays) ── */
+[data-theme="light"] [style*="rgba(0,0,0,0.6)"],
+[data-theme="light"] [style*="rgba(0, 0, 0, 0.6)"],
+[data-theme="light"] [style*="rgba(0,0,0,0.5)"],
+[data-theme="light"] [style*="rgba(0, 0, 0, 0.5)"] {
+  background: rgba(60, 30, 25, 0.40) !important;
+  backdrop-filter: blur(12px) !important;
+}
+
+/* ── Login/modal card dark backgrounds → warm ivory glass ── */
+[data-theme="light"] [style*="rgba(18, 14, 16"],
+[data-theme="light"] [style*="rgba(12, 10, 12"] {
+  background: linear-gradient(145deg, rgba(255,251,247,0.97) 0%, rgba(255,248,242,0.99) 100%) !important;
+  border-color: rgba(183,110,121,0.14) !important;
+  box-shadow:
+    0 25px 60px rgba(183,110,121,0.13),
+    0 0 80px rgba(212,175,55,0.07),
+    inset 0 1px 0 rgba(255,255,255,0.98) !important;
+}
+
+/* ── Tailwind opacity text utilities ── */
+[data-theme="light"] .text-white    { color: var(--t-primary) !important; }
+[data-theme="light"] .text-white\/90 { color: var(--t-high)   !important; }
+[data-theme="light"] .text-white\/80 { color: var(--t-high)   !important; }
+[data-theme="light"] .text-white\/70 { color: var(--t-med)    !important; }
+[data-theme="light"] .text-white\/60 { color: var(--t-med)    !important; }
+[data-theme="light"] .text-white\/50 { color: var(--t-med)    !important; }
+[data-theme="light"] .text-white\/40 { color: var(--t-low)    !important; }
+[data-theme="light"] .text-white\/30 { color: var(--t-low)    !important; }
+[data-theme="light"] .text-white\/20 { color: var(--t-faint)  !important; }
+[data-theme="light"] .text-white\/10 { color: var(--t-ghost)  !important; }
+
+/* ── bg-deep-dark Tailwind class ── */
+[data-theme="light"] .bg-deep-dark { background: var(--deep-dark) !important; }
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--deep-dark);
+  color: #e8e0e2;
+  overscroll-behavior: none;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Background ambient glow */
+body::before {
+  content: '';
+  position: fixed;
+  top: -30%;
+  left: -20%;
+  width: 60%;
+  height: 60%;
+  background: radial-gradient(circle, rgba(183, 110, 121, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  bottom: -30%;
+  right: -20%;
+  width: 70%;
+  height: 70%;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.05) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ============================================ */
+/* Glassmorphism Utilities                      */
+/* ============================================ */
+@layer components {
+  .glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+  }
+
+  .glass-card-hover:hover {
+    background: var(--glass-hover);
+    border-color: var(--rose-gold);
+  }
+
+  .glass-input {
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    color: inherit;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.3s ease;
+  }
+
+  .glass-input:focus {
+    outline: none;
+    border-color: var(--rose-gold);
+    box-shadow: 0 0 0 3px var(--glass-border);
+    background: var(--glass-hover);
+  }
+
+  .glass-input::placeholder {
+    color: var(--rose-gold-light);
+    opacity: 0.6;
+  }
+
+  .btn-rose {
+    background: linear-gradient(135deg, var(--rose-gold), var(--rose-gold-light));
+    color: var(--deep-dark);
+    border: none;
+    border-radius: 12px;
+    padding: 12px 28px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    letter-spacing: 0.5px;
+  }
+
+  .btn-rose::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+    transition: left 0.5s ease;
+  }
+
+  .btn-rose:hover::before {
+    left: 100%;
+  }
+
+  .btn-rose:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px var(--glass-border);
+  }
+
+  .btn-rose:active {
+    transform: translateY(0);
+  }
+
+  .btn-rose:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  /* ============================================ */
+  /* Diary Page Card — Physical Notebook Look     */
+  /* ============================================ */
+  .diary-page {
+    position: relative;
+    background: var(--paper-cream);
+    border-radius: 4px 12px 12px 4px;
+    padding: 18px 18px 18px 42px;
+    margin-bottom: 12px;
+    overflow: hidden;
+    color: var(--ink-brown);
+    box-shadow:
+      2px 3px 12px rgba(0, 0, 0, 0.12),
+      inset 0 0 40px rgba(200, 180, 150, 0.08);
+    /* Paper texture noise */
+    background-image: url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.04' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23paper)' opacity='0.06'/%3E%3C/svg%3E");
+  }
+
+  /* Red margin line */
+  .diary-page::before {
+    content: '';
+    position: absolute;
+    left: 34px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--margin-red);
+    z-index: 1;
+  }
+
+  /* Horizontal ruled lines */
+  .diary-page::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(transparent,
+        transparent 27px,
+        var(--line-color) 27px,
+        var(--line-color) 28px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Spiral binding holes */
+  .diary-page-holes {
+    position: absolute;
+    left: 8px;
+    top: 12px;
+    bottom: 12px;
+    width: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .diary-hole {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--deep-dark);
+    border: 1.5px solid rgba(180, 160, 140, 0.3);
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Torn edge effect on bottom */
+  .diary-torn-edge {
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: linear-gradient(90deg,
+        var(--paper-cream) 0%, transparent 3%,
+        var(--paper-cream) 6%, transparent 8%,
+        var(--paper-cream) 11%, transparent 14%,
+        var(--paper-cream) 17%, transparent 19%,
+        var(--paper-cream) 22%, transparent 25%,
+        var(--paper-cream) 28%, transparent 30%,
+        var(--paper-cream) 33%, transparent 36%,
+        var(--paper-cream) 39%, transparent 41%,
+        var(--paper-cream) 44%, transparent 47%,
+        var(--paper-cream) 50%, transparent 52%,
+        var(--paper-cream) 55%, transparent 58%,
+        var(--paper-cream) 61%, transparent 63%,
+        var(--paper-cream) 66%, transparent 69%,
+        var(--paper-cream) 72%, transparent 74%,
+        var(--paper-cream) 77%, transparent 80%,
+        var(--paper-cream) 83%, transparent 85%,
+        var(--paper-cream) 88%, transparent 91%,
+        var(--paper-cream) 94%, transparent 97%,
+        var(--paper-cream) 100%);
+    z-index: 3;
+  }
+
+  /* Handwriting font */
+  .font-handwriting {
+    font-family: 'Caveat', cursive;
+  }
+
+  /* Date separator */
+  .diary-date-separator {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 16px 0 8px 0;
+  }
+
+  .diary-date-separator::before,
+  .diary-date-separator::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(183, 110, 121, 0.15), transparent);
+  }
+
+  /* Mood sticker */
+  .mood-sticker {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    font-size: 1.5rem;
+    transform: rotate(8deg);
+    filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.1));
+    z-index: 5;
+  }
+
+  /* Private badge */
+  .private-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: rgba(183, 110, 121, 0.1);
+    color: var(--rose-gold);
+    border: 1px solid rgba(183, 110, 121, 0.15);
+  }
+
+  /* Notebook feed container */
+  .notebook-spine {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 6px;
+    background: linear-gradient(180deg,
+        #8a6b4a 0%, #a0845e 10%, #7a5c3d 20%,
+        #8a6b4a 30%, #a0845e 50%, #7a5c3d 60%,
+        #8a6b4a 70%, #a0845e 85%, #7a5c3d 100%);
+    border-radius: 3px 0 0 3px;
+    z-index: 20;
+    box-shadow: 2px 0 6px rgba(0, 0, 0, 0.15);
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--glass-border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--rose-gold);
+}
+
+/* Hide scrollbar for mood picker */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Moto G73 / most phones (360-430px) */
+@media screen and (max-width: 430px) {
+  body {
+    font-size: 14px;
+  }
+
+  .diary-page {
+    padding: 16px 14px 16px 38px;
+    margin-bottom: 10px;
+  }
+
+  .diary-page::before {
+    left: 30px;
+  }
+
+  .diary-page-holes {
+    left: 6px;
+  }
+
+  .diary-hole {
+    width: 8px;
+    height: 8px;
+  }
+
+  .glass-card {
+    border-radius: 14px;
+  }
+}
+
+/* Very small phones (<360px) */
+@media screen and (max-width: 360px) {
+  body {
+    font-size: 13px;
+  }
+
+  .diary-page {
+    padding: 14px 10px 14px 34px;
+    margin-bottom: 8px;
+  }
+
+  .diary-page::before {
+    left: 26px;
+  }
+
+  .diary-page-holes {
+    left: 4px;
+  }
+
+  .diary-hole {
+    width: 7px;
+    height: 7px;
+  }
+}
+
+/* Grid layout: single column on small screens */
+@media screen and (max-width: 600px) {
+  [data-diary-layout="grid"] .space-y-5 {
+    grid-template-columns: 1fr !important;
+    gap: 12px;
+  }
+}
+
+/* Polaroid layout: full width cards on mobile */
+@media screen and (max-width: 600px) {
+  [data-diary-layout="polaroid"] .space-y-5 {
+    gap: 20px;
+  }
+
+  [data-diary-layout="polaroid"] .space-y-5>div {
+    width: 100% !important;
+  }
+
+  [data-diary-layout="polaroid"] .diary-page::before {
+    height: 150px;
+  }
+}
+
+/* Chat layout: wider bubbles on mobile */
+@media screen and (max-width: 430px) {
+  [data-diary-layout="chat"] .diary-page {
+    max-width: 90% !important;
+    padding: 10px 14px !important;
+  }
+}
+
+/* Safe area insets for notch devices */
+@supports (padding: env(safe-area-inset-top)) {
+  body {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+}
+
+/* Prevent text selection on interactive elements */
+button,
+[role="button"] {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Fix for 100vh on mobile browsers (address bar issue) */
+@supports (height: 100dvh) {
+
+  html,
+  body,
+  #root {
+    height: 100dvh;
+  }
+}
