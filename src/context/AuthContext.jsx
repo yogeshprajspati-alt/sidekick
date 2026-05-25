@@ -60,7 +60,8 @@ export function AuthProvider({ children }) {
         // Listen for auth changes
         const { data: { subscription } } = supabase.auth.onAuthStateChange(
             (event, session) => {
-                if (event === 'PASSWORD_RECOVERY') {
+                if (event === 'PASSWORD_RECOVERY' ||
+                    (event === 'SIGNED_IN' && sessionStorage.getItem('sidekick_password_recovery') === '1')) {
                     sessionStorage.setItem('sidekick_password_recovery', '1')
                     setIsPasswordRecovery(true)
                     setUser(session?.user ?? null)
