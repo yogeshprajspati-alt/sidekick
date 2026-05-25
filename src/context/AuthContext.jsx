@@ -65,9 +65,17 @@ export function AuthProvider({ children }) {
                     sessionStorage.setItem('sidekick_password_recovery', '1')
                     setIsPasswordRecovery(true)
                     setUser(session?.user ?? null)
-                } else {
+                } else if (event === 'USER_UPDATED') {
+                    // Password was updated — clear recovery, keep user logged in
                     sessionStorage.removeItem('sidekick_password_recovery')
                     setIsPasswordRecovery(false)
+                    setUser(session?.user ?? null)
+                } else if (event === 'SIGNED_OUT') {
+                    sessionStorage.removeItem('sidekick_password_recovery')
+                    setIsPasswordRecovery(false)
+                    setUser(null)
+                } else {
+                    // SIGNED_IN normally — don't touch recovery flag
                     setUser(session?.user ?? null)
                 }
                 setLoading(false)
