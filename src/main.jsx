@@ -18,6 +18,15 @@ try {
     }
 } catch { /* ignore */ }
 
+// Detect Supabase password recovery BEFORE React mounts
+// This is the most reliable way — hash is still intact at this point
+try {
+    const hash = window.location.hash
+    if (hash.includes('type=recovery') && hash.includes('access_token')) {
+        sessionStorage.setItem('sidekick_password_recovery', '1')
+    }
+} catch { /* ignore */ }
+
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
         <App />
