@@ -30,7 +30,9 @@ export default function EntryComposer({ onEntryAdded, activeTab }) {
     const [isPrivate, setIsPrivate] = useState(false)
     const [isSecretLetter, setIsSecretLetter] = useState(false)
     const [unlockDate, setUnlockDate] = useState('')
-    const [entryType, setEntryType] = useState('normal') // 'normal' | 'letter' | 'gift'
+    const [entryType, setEntryType] = useState('normal') // 'normal'|'letter'|'gift'|'sticky'|'scroll'|'apology'|'appreciation'|'celebration'|'poll'|'mystery'|'question'
+    const [noteColor, setNoteColor] = useState('#f9e4b7') // for sticky notes
+    const [pollOptions, setPollOptions] = useState(['', '']) // for poll cards
     const [sending, setSending] = useState(false)
     const [showAreYouOkay, setShowAreYouOkay] = useState(false)
     const [errorMsg, setErrorMsg] = useState(null)
@@ -70,6 +72,9 @@ export default function EntryComposer({ onEntryAdded, activeTab }) {
                 category,
                 is_private: isPrivate,
                 entry_type: entryType,
+                note_color: entryType === 'sticky' ? noteColor : null,
+                poll_options: entryType === 'poll' ? pollOptions.filter(o => o.trim()) : null,
+                poll_votes: entryType === 'poll' ? {} : null,
                 ...(isSecretLetter && unlockDate ? { unlock_date: new Date(unlockDate).toISOString() } : {}),
             })
 
@@ -81,6 +86,8 @@ export default function EntryComposer({ onEntryAdded, activeTab }) {
             setCategory('Personal')
             setIsSecretLetter(false)
             setEntryType('normal')
+            setNoteColor('#f9e4b7')
+            setPollOptions(['', ''])
             setUnlockDate('')
 
             // Check if entry is emotional before closing
@@ -161,25 +168,44 @@ export default function EntryComposer({ onEntryAdded, activeTab }) {
                             {/* Title */}
                             <div className="flex items-center justify-between mb-4">
                                 <h3 className="font-handwriting text-[22px]" style={{ color: 'rgba(230,184,192,0.6)' }}>
-                                    {entryType === 'letter' ? 'Dear Love...' : entryType === 'gift' ? '🎀 A Gift for You' : isPrivate ? 'Dear Diary...' : 'Dear Us...'}
+                                    {entryType === 'letter' ? 'Dear Love...'
+                                    : entryType === 'gift' ? '🎀 A Gift for You'
+                                    : entryType === 'sticky' ? '📝 Quick Note'
+                                    : entryType === 'scroll' ? '📜 A Scroll for You'
+                                    : entryType === 'apology' ? '💐 I\'m Sorry...'
+                                    : entryType === 'appreciation' ? '🌟 You\'re Amazing'
+                                    : entryType === 'celebration' ? '🎉 Let\'s Celebrate!'
+                                    : entryType === 'poll' ? '🗺️ Create a Poll'
+                                    : entryType === 'mystery' ? '🔮 Mystery Message'
+                                    : entryType === 'question' ? '❓ Ask a Question'
+                                    : isPrivate ? 'Dear Diary...' : 'Dear Us...'}
                                 </h3>
 
-                                <div className="flex items-center gap-2">
+                                <div className="flex items-center gap-1.5 flex-wrap justify-end">
                                     {/* Entry Type Toggles */}
                                     {[
-                                        { type: 'letter', emoji: '💌', label: 'Secret Letter' },
-                                        { type: 'gift',   emoji: '🎀', label: 'Gift Note' },
+                                        { type: 'letter',        emoji: '💌', label: 'Secret Letter' },
+                                        { type: 'gift',          emoji: '🎀', label: 'Gift Note' },
+                                        { type: 'sticky',        emoji: '🗒️', label: 'Sticky Note' },
+                                        { type: 'scroll',        emoji: '📜', label: 'Scroll' },
+                                        { type: 'apology',       emoji: '💐', label: 'Apology Note' },
+                                        { type: 'appreciation',  emoji: '🌟', label: 'Appreciation' },
+                                        { type: 'celebration',   emoji: '🎉', label: 'Celebration' },
+                                        { type: 'poll',          emoji: '🗺️', label: 'Poll' },
+                                        { type: 'mystery',       emoji: '🔮', label: 'Mystery' },
+                                        { type: 'question',      emoji: '❓', label: 'Question' },
                                     ].map(({ type, emoji, label }) => (
                                         <motion.button
                                             key={type}
                                             onClick={() => setEntryType(entryType === type ? 'normal' : type)}
-                                            className="w-9 h-9 rounded-full flex items-center justify-center transition-all"
+                                            className="w-8 h-8 rounded-full flex items-center justify-center transition-all"
                                             style={{
                                                 background: entryType === type
                                                     ? 'linear-gradient(135deg, rgba(212,175,55,0.2), rgba(183,110,121,0.15))'
                                                     : 'rgba(255,255,255,0.04)',
                                                 border: `1px solid ${entryType === type ? 'rgba(212,175,55,0.3)' : 'rgba(255,255,255,0.06)'}`,
                                                 boxShadow: entryType === type ? '0 0 10px rgba(212,175,55,0.15)' : 'none',
+                                                fontSize: 14,
                                             }}
                                             whileTap={{ scale: 0.9 }}
                                             title={label}
@@ -196,7 +222,7 @@ export default function EntryComposer({ onEntryAdded, activeTab }) {
                                     {/* Secret Letter Toggle (existing) */}
                                     <motion.button
                                         onClick={() => setIsSecretLetter(!isSecretLetter)}
-                                        className="w-9 h-9 rounded-full flex items-center justify-center transition-all"
+                                        className="w-8 h-8 rounded-full flex items-center justify-center transition-all"
                                         style={{
                                             background: isSecretLetter
                                                 ? 'linear-gradient(135deg, rgba(212,175,55,0.2), rgba(183,110,121,0.15))'
@@ -240,7 +266,82 @@ export default function EntryComposer({ onEntryAdded, activeTab }) {
                                 </div>
                             </div>
 
+                            {/* Sticky Note Color Picker */}
+                            <AnimatePresence>
+                                {entryType === 'sticky' && (
+                                    <motion.div
+                                        initial={{ opacity: 0, height: 0 }}
+                                        animate={{ opacity: 1, height: 'auto' }}
+                                        exit={{ opacity: 0, height: 0 }}
+                                        className="flex items-center gap-2 mb-3"
+                                    >
+                                        <span style={{ fontSize: 11, color: 'rgba(232,224,226,0.4)', fontFamily: 'var(--font-body)' }}>Note color:</span>
+                                        {['#f9e4b7', '#ffc8d4', '#b7e4c7', '#b7d4f9', '#e4b7f9'].map(color => (
+                                            <button
+                                                key={color}
+                                                onClick={() => setNoteColor(color)}
+                                                style={{
+                                                    width: 22, height: 22, borderRadius: '50%',
+                                                    background: color,
+                                                    border: noteColor === color ? '2px solid rgba(255,255,255,0.6)' : '2px solid transparent',
+                                                    cursor: 'pointer',
+                                                    transition: 'border 0.15s',
+                                                }}
+                                            />
+                                        ))}
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+
                             {/* Secret Letter Date Picker */}
+                            {/* Poll Options */}
+                            <AnimatePresence>
+                                {entryType === 'poll' && (
+                                    <motion.div
+                                        initial={{ opacity: 0, height: 0 }}
+                                        animate={{ opacity: 1, height: 'auto' }}
+                                        exit={{ opacity: 0, height: 0 }}
+                                        style={{ marginBottom: 12 }}
+                                    >
+                                        <p style={{ fontSize: 11, color: 'rgba(183,110,121,0.6)', fontFamily: 'var(--font-body)', marginBottom: 8 }}>
+                                            Poll options (min 2):
+                                        </p>
+                                        {pollOptions.map((opt, i) => (
+                                            <div key={i} style={{ display: 'flex', gap: 6, marginBottom: 6 }}>
+                                                <input
+                                                    value={opt}
+                                                    onChange={e => {
+                                                        const updated = [...pollOptions]
+                                                        updated[i] = e.target.value
+                                                        setPollOptions(updated)
+                                                    }}
+                                                    placeholder={`Option ${i + 1}`}
+                                                    style={{
+                                                        flex: 1, padding: '8px 10px', borderRadius: 9,
+                                                        border: '1px solid rgba(183,110,121,0.18)',
+                                                        background: 'rgba(255,255,255,0.03)',
+                                                        color: 'rgba(232,224,226,0.85)',
+                                                        fontFamily: 'var(--font-body)', fontSize: 12,
+                                                        outline: 'none',
+                                                    }}
+                                                />
+                                                {pollOptions.length > 2 && (
+                                                    <button
+                                                        onClick={() => setPollOptions(pollOptions.filter((_, j) => j !== i))}
+                                                        style={{ padding: '0 8px', borderRadius: 9, background: 'rgba(220,80,80,0.08)', border: '1px solid rgba(220,80,80,0.15)', color: 'rgba(220,80,80,0.7)', cursor: 'pointer', fontSize: 13 }}
+                                                    >✕</button>
+                                                )}
+                                            </div>
+                                        ))}
+                                        {pollOptions.length < 5 && (
+                                            <button
+                                                onClick={() => setPollOptions([...pollOptions, ''])}
+                                                style={{ fontSize: 11, color: 'rgba(183,110,121,0.55)', background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'var(--font-body)', padding: '4px 0' }}
+                                            >+ Add option</button>
+                                        )}
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
                             <AnimatePresence>
                                 {isSecretLetter && (
                                     <motion.div

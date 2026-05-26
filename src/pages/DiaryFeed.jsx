@@ -17,7 +17,6 @@ import CustomizationPanel from '../components/CustomizationPanel'
 import ExportPanel from '../components/ExportPanel'
 import SearchPanel from '../components/SearchPanel'
 import ThemeToggle from '../components/ThemeToggle'
-import MoodTimeline from '../components/MoodTimeline'
 
 // Auto-archive shared entries older than 30 days
 const ARCHIVE_DAYS = 30
@@ -552,7 +551,7 @@ export default function DiaryFeed() {
                                         marginTop: 12, textAlign: 'center', fontSize: 10,
                                         color: 'rgba(183,110,121,0.25)', fontFamily: 'var(--font-body)',
                                         letterSpacing: '0.04em',
-                                    }}>Just For Prachiiee🎀</p>
+                                    }}>Made with 💕 for just you two</p>
                                 </motion.div>
                             </motion.div>
                         </>
@@ -645,11 +644,6 @@ export default function DiaryFeed() {
                     >
                         {/* Greeting for Prachi */}
                         {!isAdmin && activeTab !== 'archive' && activeTab !== 'play' && activeTab !== 'requests' && <GreetingBanner />}
-
-                        {/* 📊 MOOD TIMELINE TAB */}
-                        {activeTab === 'mood' && (
-                            loading ? <LoadingState /> : <MoodTimeline entries={entries} />
-                        )}
 
                         {/* 🎲 PLAY TAB */}
                         {activeTab === 'play' && (
@@ -756,7 +750,9 @@ export default function DiaryFeed() {
                                                         <div className="flex-1 h-[1px]" style={{ background: 'linear-gradient(to left, transparent, rgba(183,110,121,0.12))' }} />
                                                     </div>
                                                     {dateEntries.map((entry, i) => (
-                                                        <DiaryCard key={entry.id} entry={entry} index={i} onEntryUpdated={handleEntryUpdated} onEntryDeleted={handleEntryDeleted} />
+                                                        <div key={entry.id} style={{ marginBottom: 16 }}>
+                                                            <DiaryCard entry={entry} index={i} onEntryUpdated={handleEntryUpdated} onEntryDeleted={handleEntryDeleted} />
+                                                        </div>
                                                     ))}
                                                 </div>
                                             ))}

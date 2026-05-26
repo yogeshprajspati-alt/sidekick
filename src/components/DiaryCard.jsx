@@ -4,6 +4,9 @@ import { supabase } from '../lib/supabase'
 import { useAuth } from '../context/AuthContext'
 import Reactions from './Reactions'
 import Comments from './Comments'
+import PollCard from './PollCard'
+import MysteryCard from './MysteryCard'
+import QuestionCard from './QuestionCard'
 import LinkPreview, { extractFirstUrl, renderTextWithLinks } from './LinkPreview'
 
 function formatDiaryDate(dateStr) {
@@ -48,7 +51,20 @@ export default function DiaryCard({ entry, index, onEntryUpdated, onEntryDeleted
     const entryType = entry.entry_type || 'normal'
     const isLetter = entryType === 'letter'
     const isGift = entryType === 'gift'
-    const isSpecial = isLetter || isGift
+    const isScroll = entryType === 'scroll'
+    const isApology = entryType === 'apology'
+    const isAppreciation = entryType === 'appreciation'
+    const isCelebration = entryType === 'celebration'
+    const isSpecial = isLetter || isGift || isScroll || isApology || isAppreciation || isCelebration
+
+    const SPECIAL_HEADERS = {
+        letter:        { emoji: '💌', text: 'A letter for you',      color: 'linear-gradient(135deg, #e6b8c0, #d4af37)' },
+        gift:          { emoji: '🎀', text: 'A gift note for you',   color: 'linear-gradient(135deg, #d4af37, #e6b8c0)' },
+        scroll:        { emoji: '📜', text: 'An ancient scroll',     color: 'linear-gradient(135deg, #c4956a, #d4af37)' },
+        apology:       { emoji: '💐', text: 'A heartfelt apology',   color: 'linear-gradient(135deg, #ffb4c8, #e6b8c0)' },
+        appreciation:  { emoji: '🌟', text: 'An appreciation note',  color: 'linear-gradient(135deg, #d4af37, #ffe066)' },
+        celebration:   { emoji: '🎉', text: 'A celebration!',        color: 'linear-gradient(135deg, #c89eff, #e6b8c0)' },
+    }
 
     const MOODS = ['❤️', '😊', '😢', '🥰', '✨', '😡', '🌙', '🦋', '🫂', '☕']
 
@@ -102,6 +118,179 @@ export default function DiaryCard({ entry, index, onEntryUpdated, onEntryDeleted
     }
 
     const CONFETTI = ['🌸', '✨', '💛', '🎊', '💕', '⭐', '🌟', '💫']
+    const STARS    = ['⭐', '🌟', '✨', '💫', '⭐', '🌟', '✨', '💫', '⭐', '🌟']
+    const FLOWERS  = ['🌸', '🌷', '💐', '🌹', '🌺', '🌼', '🌸', '🌷', '💐', '🌹']
+    const PARTY    = ['🎊', '🎉', '✨', '🎈', '💥', '🎊', '🎉', '✨', '🎈', '💥']
+
+    // ── Sticky Note Card ──
+    if (entryType === 'sticky') {
+        const color = entry.note_color || '#f9e4b7'
+        const textColor = '#3a2e1a'
+        return (
+            <motion.div
+                layout
+                initial={{ opacity: 0, y: 20, rotate: -3 }}
+                animate={{ opacity: 1, y: 0, rotate: (index % 3 - 1) * 2 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ type: 'spring', stiffness: 200, damping: 20 }}
+                style={{ maxWidth: 320, margin: '0 auto', width: '100%' }}
+            >
+                <motion.div
+                    whileHover={{ y: -4, rotate: 0, boxShadow: '0 16px 40px rgba(0,0,0,0.25)' }}
+                    style={{
+                        background: color,
+                        borderRadius: '2px 18px 18px 2px',
+                        padding: '20px 18px 24px',
+                        position: 'relative',
+                        boxShadow: '3px 4px 18px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.5)',
+                        minHeight: 120,
+                    }}
+                >
+                    {/* Tape top */}
+                    <div style={{
+                        position: 'absolute', top: -8, left: '50%', transform: 'translateX(-50%)',
+                        width: 50, height: 16, borderRadius: 2,
+                        background: 'rgba(255,255,200,0.55)',
+                        boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+                    }} />
+                    {/* Fold corner */}
+                    <div style={{
+                        position: 'absolute', bottom: 0, right: 0, width: 0, height: 0,
+                        borderStyle: 'solid',
+                        borderWidth: '0 0 22px 22px',
+                        borderColor: `transparent transparent rgba(0,0,0,0.12) transparent`,
+                    }} />
+                    <p style={{ fontSize: 13, color: 'rgba(58,46,26,0.5)', fontFamily: 'var(--font-body)', marginBottom: 6 }}>
+                        🗒️ {formatDiaryDate(entry.created_at)}
+                    </p>
+                    <p style={{ fontSize: 15, color: textColor, fontFamily: 'var(--font-handwriting, cursive)', lineHeight: 1.6, whiteSpace: 'pre-wrap' }}>
+                        {entry.text}
+                    </p>
+                </motion.div>
+            </motion.div>
+        )
+    }
+
+    // ── Scroll Card ──
+    if (entryType === 'scroll' && !isRevealed) {
+        return (
+            <motion.div
+                layout
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ type: 'spring', stiffness: 200, damping: 22 }}
+                onClick={() => setIsRevealed(true)}
+                style={{ cursor: 'pointer', maxWidth: 420, margin: '0 auto', width: '100%' }}
+            >
+                <motion.div
+                    whileHover={{ y: -3, boxShadow: '0 16px 40px rgba(139,100,60,0.25)' }}
+                    whileTap={{ scale: 0.97 }}
+                    style={{
+                        background: 'linear-gradient(180deg, #c4956a 0%, #d4a574 8%, #f5e6c8 15%, #fdf3dc 50%, #f5e6c8 85%, #d4a574 92%, #c4956a 100%)',
+                        borderRadius: 12,
+                        padding: '24px 28px',
+                        position: 'relative',
+                        boxShadow: '0 4px 20px rgba(100,70,30,0.20)',
+                        textAlign: 'center',
+                        border: '1px solid rgba(180,130,70,0.3)',
+                    }}
+                >
+                    <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 18, background: 'linear-gradient(180deg, #8b5e3c, #c4956a)', borderRadius: '12px 12px 0 0', boxShadow: '0 2px 6px rgba(0,0,0,0.2)' }} />
+                    <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 18, background: 'linear-gradient(180deg, #c4956a, #8b5e3c)', borderRadius: '0 0 12px 12px', boxShadow: '0 -2px 6px rgba(0,0,0,0.2)' }} />
+                    <div style={{ paddingTop: 12, paddingBottom: 12 }}>
+                        <motion.span animate={{ rotate: [0, 5, -5, 0] }} transition={{ duration: 4, repeat: Infinity }} style={{ fontSize: 32, display: 'block', marginBottom: 10 }}>📜</motion.span>
+                        <p style={{ fontFamily: 'var(--font-script)', fontSize: 18, color: '#5c3d1e', marginBottom: 4 }}>A scroll awaits you</p>
+                        <p style={{ fontSize: 10, color: 'rgba(92,61,30,0.5)', fontFamily: 'var(--font-body)' }}>Tap to unroll ✨</p>
+                    </div>
+                </motion.div>
+            </motion.div>
+        )
+    }
+
+    // ── Apology Note Card ──
+    if (entryType === 'apology' && !isRevealed) {
+        return (
+            <motion.div
+                layout
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ type: 'spring', stiffness: 200, damping: 22 }}
+                onClick={() => setIsRevealed(true)}
+                style={{ cursor: 'pointer', maxWidth: 420, margin: '0 auto', width: '100%' }}
+            >
+                <motion.div
+                    whileHover={{ y: -3 }}
+                    whileTap={{ scale: 0.97 }}
+                    style={{ borderRadius: 18, background: 'linear-gradient(145deg, rgba(40,20,28,0.98), rgba(30,14,20,0.99))', border: '1px solid rgba(255,150,180,0.20)', boxShadow: '0 8px 32px rgba(255,100,150,0.10)', padding: '28px 24px', textAlign: 'center', position: 'relative', overflow: 'hidden' }}
+                >
+                    {FLOWERS.slice(0,5).map((f, i) => (
+                        <motion.span key={i} animate={{ y: ['-10%', '110%'], x: [0, (i % 2 === 0 ? 10 : -10)], opacity: [0, 1, 0] }} transition={{ duration: 3 + i * 0.5, repeat: Infinity, delay: i * 0.6, ease: 'linear' }} style={{ position: 'absolute', left: `${10 + i * 18}%`, top: 0, fontSize: 16, pointerEvents: 'none', opacity: 0 }}>{f}</motion.span>
+                    ))}
+                    <motion.span animate={{ rotate: [0, 10, -10, 0], scale: [1, 1.1, 1] }} transition={{ duration: 3, repeat: Infinity }} style={{ fontSize: 40, display: 'block', marginBottom: 12, position: 'relative', zIndex: 1 }}>💐</motion.span>
+                    <p style={{ fontFamily: 'var(--font-script)', fontSize: 20, color: 'rgba(255,180,200,0.85)', marginBottom: 6, position: 'relative', zIndex: 1 }}>I'm sorry...</p>
+                    <p style={{ fontSize: 10, color: 'rgba(255,150,180,0.4)', fontFamily: 'var(--font-body)', position: 'relative', zIndex: 1 }}>Tap to read 🌸</p>
+                </motion.div>
+            </motion.div>
+        )
+    }
+
+    // ── Appreciation Card ──
+    if (entryType === 'appreciation' && !isRevealed) {
+        return (
+            <motion.div
+                layout
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ type: 'spring', stiffness: 200, damping: 22 }}
+                onClick={() => setIsRevealed(true)}
+                style={{ cursor: 'pointer', maxWidth: 420, margin: '0 auto', width: '100%' }}
+            >
+                <motion.div
+                    whileHover={{ y: -3 }}
+                    whileTap={{ scale: 0.97 }}
+                    style={{ borderRadius: 18, background: 'linear-gradient(145deg, rgba(28,24,10,0.98), rgba(20,18,6,0.99))', border: '1px solid rgba(212,175,55,0.25)', boxShadow: '0 8px 32px rgba(212,175,55,0.12)', padding: '28px 24px', textAlign: 'center', position: 'relative', overflow: 'hidden' }}
+                >
+                    {STARS.slice(0,5).map((s, i) => (
+                        <motion.span key={i} animate={{ y: ['110%', '-10%'], opacity: [0, 1, 0] }} transition={{ duration: 2.5 + i * 0.4, repeat: Infinity, delay: i * 0.5, ease: 'linear' }} style={{ position: 'absolute', left: `${8 + i * 19}%`, bottom: 0, fontSize: 14, pointerEvents: 'none', opacity: 0 }}>{s}</motion.span>
+                    ))}
+                    <motion.span animate={{ rotate: 360 }} transition={{ duration: 8, repeat: Infinity, ease: 'linear' }} style={{ fontSize: 40, display: 'block', marginBottom: 12, position: 'relative', zIndex: 1 }}>🌟</motion.span>
+                    <p style={{ fontFamily: 'var(--font-script)', fontSize: 20, color: 'rgba(212,175,55,0.85)', marginBottom: 6, position: 'relative', zIndex: 1 }}>You're amazing ✨</p>
+                    <p style={{ fontSize: 10, color: 'rgba(212,175,55,0.4)', fontFamily: 'var(--font-body)', position: 'relative', zIndex: 1 }}>Tap to read 🌟</p>
+                </motion.div>
+            </motion.div>
+        )
+    }
+
+    // ── Celebration Card ──
+    if (entryType === 'celebration' && !isRevealed) {
+        return (
+            <motion.div
+                layout
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ type: 'spring', stiffness: 200, damping: 22 }}
+                onClick={() => setIsRevealed(true)}
+                style={{ cursor: 'pointer', maxWidth: 420, margin: '0 auto', width: '100%' }}
+            >
+                <motion.div
+                    whileHover={{ y: -3 }}
+                    whileTap={{ scale: 0.97 }}
+                    style={{ borderRadius: 18, background: 'linear-gradient(145deg, rgba(20,10,35,0.98), rgba(15,8,28,0.99))', border: '1px solid rgba(150,100,255,0.25)', boxShadow: '0 8px 32px rgba(130,80,255,0.12)', padding: '28px 24px', textAlign: 'center', position: 'relative', overflow: 'hidden' }}
+                >
+                    {PARTY.slice(0,5).map((p, i) => (
+                        <motion.span key={i} animate={{ y: ['-10%', '110%'], x: [(i % 2 === 0 ? -15 : 15), 0], opacity: [0, 1, 0] }} transition={{ duration: 2 + i * 0.4, repeat: Infinity, delay: i * 0.45, ease: 'linear' }} style={{ position: 'absolute', left: `${5 + i * 20}%`, top: 0, fontSize: 16, pointerEvents: 'none', opacity: 0 }}>{p}</motion.span>
+                    ))}
+                    <motion.span animate={{ rotate: [0, 15, -15, 0], scale: [1, 1.15, 1] }} transition={{ duration: 1.5, repeat: Infinity }} style={{ fontSize: 40, display: 'block', marginBottom: 12, position: 'relative', zIndex: 1 }}>🎉</motion.span>
+                    <p style={{ fontFamily: 'var(--font-script)', fontSize: 20, color: 'rgba(200,160,255,0.88)', marginBottom: 6, position: 'relative', zIndex: 1 }}>Let's celebrate! 🎊</p>
+                    <p style={{ fontSize: 10, color: 'rgba(180,130,255,0.4)', fontFamily: 'var(--font-body)', position: 'relative', zIndex: 1 }}>Tap to see what! 🎈</p>
+                </motion.div>
+            </motion.div>
+        )
+    }
 
     // ── Sealed Letter Card ──
     if (isLetter && !isRevealed) {
@@ -254,6 +443,21 @@ export default function DiaryCard({ entry, index, onEntryUpdated, onEntryDeleted
         )
     }
 
+    // ── Poll Card ──
+    if (entryType === 'poll') {
+        return <PollCard entry={entry} onEntryUpdated={onEntryUpdated} onEntryDeleted={onEntryDeleted} isArchived={isArchived} />
+    }
+
+    // ── Mystery Card ──
+    if (entryType === 'mystery') {
+        return <MysteryCard entry={entry} onEntryUpdated={onEntryUpdated} onEntryDeleted={onEntryDeleted} isArchived={isArchived} />
+    }
+
+    // ── Question Card ──
+    if (entryType === 'question') {
+        return <QuestionCard entry={entry} onEntryUpdated={onEntryUpdated} onEntryDeleted={onEntryDeleted} isArchived={isArchived} />
+    }
+
     // ── Revealed Letter/Gift — show with special header ──
     return (
         <motion.div
@@ -269,8 +473,8 @@ export default function DiaryCard({ entry, index, onEntryUpdated, onEntryDeleted
             className="diary-page relative"
             style={{ transform: `rotate(${tilt}deg)` }}
         >
-            {/* Special header for revealed letter/gift */}
-            {isSpecial && isRevealed && (
+            {/* Special header for revealed cards */}
+            {isSpecial && isRevealed && SPECIAL_HEADERS[entryType] && (
                 <motion.div
                     initial={{ opacity: 0, y: -8 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -279,45 +483,51 @@ export default function DiaryCard({ entry, index, onEntryUpdated, onEntryDeleted
                         textAlign: 'center',
                         padding: '10px 0 14px',
                         marginBottom: 8,
-                        borderBottom: `1px solid ${isLetter ? 'rgba(183,110,121,0.12)' : 'rgba(212,175,55,0.12)'}`,
+                        borderBottom: `1px solid rgba(183,110,121,0.12)`,
                         position: 'relative',
                         overflow: 'hidden',
                     }}
                 >
-                    {/* Confetti burst for gift */}
+                    {/* Confetti for gift */}
                     {isGift && CONFETTI.map((emoji, i) => (
                         <motion.span
                             key={i}
                             initial={{ opacity: 1, y: 0, x: 0, scale: 0 }}
-                            animate={{
-                                opacity: 0,
-                                y: -60 - Math.random() * 40,
-                                x: (i % 2 === 0 ? 1 : -1) * (20 + i * 12),
-                                scale: 1,
-                                rotate: Math.random() * 360,
-                            }}
+                            animate={{ opacity: 0, y: -60 - Math.random() * 40, x: (i % 2 === 0 ? 1 : -1) * (20 + i * 12), scale: 1, rotate: Math.random() * 360 }}
                             transition={{ duration: 0.8, delay: i * 0.06, ease: 'easeOut' }}
-                            style={{
-                                position: 'absolute',
-                                top: '50%', left: '50%',
-                                fontSize: 14,
-                                pointerEvents: 'none',
-                                zIndex: 10,
-                            }}
+                            style={{ position: 'absolute', top: '50%', left: '50%', fontSize: 14, pointerEvents: 'none', zIndex: 10 }}
                         >{emoji}</motion.span>
                     ))}
-                    <span style={{ fontSize: 22 }}>{isLetter ? '💌' : '🎀'}</span>
+                    {/* Stars for appreciation */}
+                    {isAppreciation && STARS.map((emoji, i) => (
+                        <motion.span
+                            key={i}
+                            initial={{ opacity: 1, y: 0, x: 0, scale: 0 }}
+                            animate={{ opacity: 0, y: -50 - i * 8, x: (i % 2 === 0 ? 1 : -1) * (15 + i * 10), scale: 1.2 }}
+                            transition={{ duration: 0.7, delay: i * 0.05, ease: 'easeOut' }}
+                            style={{ position: 'absolute', top: '50%', left: '50%', fontSize: 12, pointerEvents: 'none', zIndex: 10 }}
+                        >{emoji}</motion.span>
+                    ))}
+                    {/* Party for celebration */}
+                    {isCelebration && PARTY.map((emoji, i) => (
+                        <motion.span
+                            key={i}
+                            initial={{ opacity: 1, y: 0, x: 0, scale: 0 }}
+                            animate={{ opacity: 0, y: -55 - i * 7, x: (i % 2 === 0 ? 1 : -1) * (18 + i * 11), scale: 1, rotate: i * 36 }}
+                            transition={{ duration: 0.75, delay: i * 0.055, ease: 'easeOut' }}
+                            style={{ position: 'absolute', top: '50%', left: '50%', fontSize: 14, pointerEvents: 'none', zIndex: 10 }}
+                        >{emoji}</motion.span>
+                    ))}
+                    <span style={{ fontSize: 22 }}>{SPECIAL_HEADERS[entryType].emoji}</span>
                     <p style={{
                         fontFamily: 'var(--font-script)',
                         fontSize: 16,
-                        background: isLetter
-                            ? 'linear-gradient(135deg, #e6b8c0, #d4af37)'
-                            : 'linear-gradient(135deg, #d4af37, #e6b8c0)',
+                        background: SPECIAL_HEADERS[entryType].color,
                         WebkitBackgroundClip: 'text',
                         WebkitTextFillColor: 'transparent',
                         marginTop: 4,
                     }}>
-                        {isLetter ? 'A letter for you' : 'A gift note for you'}
+                        {SPECIAL_HEADERS[entryType].text}
                     </p>
                 </motion.div>
             )}
