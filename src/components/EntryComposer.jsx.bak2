@@ -30,7 +30,6 @@ export default function EntryComposer({ onEntryAdded, activeTab }) {
     const [isPrivate, setIsPrivate] = useState(false)
     const [isSecretLetter, setIsSecretLetter] = useState(false)
     const [unlockDate, setUnlockDate] = useState('')
-    const [entryType, setEntryType] = useState('normal') // 'normal' | 'letter' | 'gift'
     const [sending, setSending] = useState(false)
     const [showAreYouOkay, setShowAreYouOkay] = useState(false)
     const [errorMsg, setErrorMsg] = useState(null)
@@ -69,7 +68,6 @@ export default function EntryComposer({ onEntryAdded, activeTab }) {
                 tags,
                 category,
                 is_private: isPrivate,
-                entry_type: entryType,
                 ...(isSecretLetter && unlockDate ? { unlock_date: new Date(unlockDate).toISOString() } : {}),
             })
 
@@ -80,7 +78,6 @@ export default function EntryComposer({ onEntryAdded, activeTab }) {
             setTags([])
             setCategory('Personal')
             setIsSecretLetter(false)
-            setEntryType('normal')
             setUnlockDate('')
 
             // Check if entry is emotional before closing
@@ -161,39 +158,11 @@ export default function EntryComposer({ onEntryAdded, activeTab }) {
                             {/* Title */}
                             <div className="flex items-center justify-between mb-4">
                                 <h3 className="font-handwriting text-[22px]" style={{ color: 'rgba(230,184,192,0.6)' }}>
-                                    {entryType === 'letter' ? 'Dear Love...' : entryType === 'gift' ? '🎀 A Gift for You' : isPrivate ? 'Dear Diary...' : 'Dear Us...'}
+                                    {isSecretLetter ? 'Dear Future...' : isPrivate ? 'Dear Diary...' : 'Dear Us...'}
                                 </h3>
 
                                 <div className="flex items-center gap-2">
-                                    {/* Entry Type Toggles */}
-                                    {[
-                                        { type: 'letter', emoji: '💌', label: 'Secret Letter' },
-                                        { type: 'gift',   emoji: '🎀', label: 'Gift Note' },
-                                    ].map(({ type, emoji, label }) => (
-                                        <motion.button
-                                            key={type}
-                                            onClick={() => setEntryType(entryType === type ? 'normal' : type)}
-                                            className="w-9 h-9 rounded-full flex items-center justify-center transition-all"
-                                            style={{
-                                                background: entryType === type
-                                                    ? 'linear-gradient(135deg, rgba(212,175,55,0.2), rgba(183,110,121,0.15))'
-                                                    : 'rgba(255,255,255,0.04)',
-                                                border: `1px solid ${entryType === type ? 'rgba(212,175,55,0.3)' : 'rgba(255,255,255,0.06)'}`,
-                                                boxShadow: entryType === type ? '0 0 10px rgba(212,175,55,0.15)' : 'none',
-                                            }}
-                                            whileTap={{ scale: 0.9 }}
-                                            title={label}
-                                        >
-                                            <motion.span
-                                                animate={{ rotate: entryType === type ? [0, -10, 10, 0] : 0 }}
-                                                transition={{ duration: 0.4 }}
-                                            >
-                                                {emoji}
-                                            </motion.span>
-                                        </motion.button>
-                                    ))}
-
-                                    {/* Secret Letter Toggle (existing) */}
+                                    {/* Secret Letter Toggle */}
                                     <motion.button
                                         onClick={() => setIsSecretLetter(!isSecretLetter)}
                                         className="w-9 h-9 rounded-full flex items-center justify-center transition-all"
@@ -204,13 +173,13 @@ export default function EntryComposer({ onEntryAdded, activeTab }) {
                                             border: `1px solid ${isSecretLetter ? 'rgba(212,175,55,0.3)' : 'rgba(255,255,255,0.06)'}`,
                                         }}
                                         whileTap={{ scale: 0.9 }}
-                                        title="Time Lock"
+                                        title="Secret Letter"
                                     >
                                         <motion.span
                                             animate={{ rotate: isSecretLetter ? [0, -10, 10, 0] : 0 }}
                                             transition={{ duration: 0.4 }}
                                         >
-                                            ⏰
+                                            💌
                                         </motion.span>
                                     </motion.button>
 
