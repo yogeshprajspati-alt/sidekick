@@ -7,6 +7,7 @@ import LinkPreview, { extractFirstUrl } from './LinkPreview'
 import TagsManager from './TagsManager'
 import EntryTemplates from './EntryTemplates'
 import MoodWheelPicker from './MoodWheelPicker'
+import VoiceRecorder from './VoiceRecorder'
 
 const MOODS = ['❤️', '😊', '😢', '🥰', '✨', '😡', '🌙', '🦋', '🫂', '☕']
 
@@ -30,9 +31,11 @@ export default function EntryComposer({ onEntryAdded, activeTab }) {
     const [isPrivate, setIsPrivate] = useState(false)
     const [isSecretLetter, setIsSecretLetter] = useState(false)
     const [unlockDate, setUnlockDate] = useState('')
-    const [entryType, setEntryType] = useState('normal') // 'normal'|'letter'|'gift'|'sticky'|'scroll'|'apology'|'appreciation'|'celebration'|'poll'|'mystery'|'question'
+    const [entryType, setEntryType] = useState('normal') // 'normal'|'letter'|'gift'|'sticky'|'scroll'|'apology'|'appreciation'|'celebration'|'poll'|'mystery'|'question'|'voice'
     const [noteColor, setNoteColor] = useState('#f9e4b7') // for sticky notes
     const [pollOptions, setPollOptions] = useState(['', '']) // for poll cards
+    const [voiceData, setVoiceData] = useState(null) // { voice_url, voice_duration }
+    const [showVoiceRecorder, setShowVoiceRecorder] = useState(false)
     const [sending, setSending] = useState(false)
     const [showAreYouOkay, setShowAreYouOkay] = useState(false)
     const [errorMsg, setErrorMsg] = useState(null)
@@ -75,6 +78,8 @@ export default function EntryComposer({ onEntryAdded, activeTab }) {
                 note_color: entryType === 'sticky' ? noteColor : null,
                 poll_options: entryType === 'poll' ? pollOptions.filter(o => o.trim()) : null,
                 poll_votes: entryType === 'poll' ? {} : null,
+                voice_url: entryType === 'voice' ? voiceData?.voice_url : null,
+                voice_duration: entryType === 'voice' ? voiceData?.voice_duration : null,
                 ...(isSecretLetter && unlockDate ? { unlock_date: new Date(unlockDate).toISOString() } : {}),
             })
 
@@ -88,6 +93,8 @@ export default function EntryComposer({ onEntryAdded, activeTab }) {
             setEntryType('normal')
             setNoteColor('#f9e4b7')
             setPollOptions(['', ''])
+            setVoiceData(null)
+            setShowVoiceRecorder(false)
             setUnlockDate('')
 
             // Check if entry is emotional before closing
@@ -175,9 +182,10 @@ export default function EntryComposer({ onEntryAdded, activeTab }) {
                                     : entryType === 'apology' ? '💐 I\'m Sorry...'
                                     : entryType === 'appreciation' ? '🌟 You\'re Amazing'
                                     : entryType === 'celebration' ? '🎉 Let\'s Celebrate!'
-                                    : entryType === 'poll' ? '🗺️ Create a Poll'
+                                    : entryType === 'poll' ? '🗳️ Create a Poll'
                                     : entryType === 'mystery' ? '🔮 Mystery Message'
                                     : entryType === 'question' ? '❓ Ask a Question'
+                                    : entryType === 'voice' ? '🎙️ Voice Note'
                                     : isPrivate ? 'Dear Diary...' : 'Dear Us...'}
                                 </h3>
 
@@ -191,9 +199,10 @@ export default function EntryComposer({ onEntryAdded, activeTab }) {
                                         { type: 'apology',       emoji: '💐', label: 'Apology Note' },
                                         { type: 'appreciation',  emoji: '🌟', label: 'Appreciation' },
                                         { type: 'celebration',   emoji: '🎉', label: 'Celebration' },
-                                        { type: 'poll',          emoji: '🗺️', label: 'Poll' },
+                                        { type: 'poll',          emoji: '🗳️', label: 'Poll' },
                                         { type: 'mystery',       emoji: '🔮', label: 'Mystery' },
                                         { type: 'question',      emoji: '❓', label: 'Question' },
+                                        { type: 'voice',         emoji: '🎙️', label: 'Voice Note' },
                                     ].map(({ type, emoji, label }) => (
                                         <motion.button
                                             key={type}
@@ -265,6 +274,53 @@ export default function EntryComposer({ onEntryAdded, activeTab }) {
                                     </motion.button>
                                 </div>
                             </div>
+
+                            {/* Voice Recorder */}
+                            <AnimatePresence>
+                                {entryType === 'voice' && (
+                                    <motion.div
+                                        initial={{ opacity: 0, height: 0 }}
+                                        animate={{ opacity: 1, height: 'auto' }}
+                                        exit={{ opacity: 0, height: 0 }}
+                                    >
+                                        {!voiceData ? (
+                                            <VoiceRecorder
+                                                onRecorded={(data) => setVoiceData(data)}
+                                                onCancel={() => setEntryType('normal')}
+                                            />
+                                        ) : (
+                                            <motion.div
+                                                initial={{ opacity: 0 }}
+                                                animate={{ opacity: 1 }}
+                                                style={{
+                                                    padding: '10px 12px',
+                                                    borderRadius: 12,
+                                                    background: 'rgba(183,110,121,0.07)',
+                                                    border: '1px solid rgba(183,110,121,0.20)',
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'space-between',
+                                                    marginBottom: 12,
+                                                }}
+                                            >
+                                                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                                                    <span style={{ fontSize: 18 }}>🎙️</span>
+                                                    <div>
+                                                        <p style={{ fontSize: 12, color: 'rgba(232,224,226,0.80)', fontFamily: 'var(--font-body)' }}>Voice note ready</p>
+                                                        <p style={{ fontSize: 10, color: 'rgba(183,110,121,0.55)', fontFamily: 'var(--font-body)' }}>
+                                                            {Math.floor(voiceData.voice_duration / 60)}:{String(voiceData.voice_duration % 60).padStart(2, '0')}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <button
+                                                    onClick={() => setVoiceData(null)}
+                                                    style={{ background: 'none', border: 'none', color: 'rgba(220,80,80,0.65)', cursor: 'pointer', fontSize: 13 }}
+                                                >✕</button>
+                                            </motion.div>
+                                        )}
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
 
                             {/* Sticky Note Color Picker */}
                             <AnimatePresence>

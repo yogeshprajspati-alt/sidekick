@@ -7,6 +7,7 @@ import Comments from './Comments'
 import PollCard from './PollCard'
 import MysteryCard from './MysteryCard'
 import QuestionCard from './QuestionCard'
+import VoiceCard from './VoiceCard'
 import LinkPreview, { extractFirstUrl, renderTextWithLinks } from './LinkPreview'
 
 function formatDiaryDate(dateStr) {
@@ -441,6 +442,11 @@ export default function DiaryCard({ entry, index, onEntryUpdated, onEntryDeleted
                 </motion.div>
             </motion.div>
         )
+    }
+
+    // ── Voice Card ──
+    if (entryType === 'voice') {
+        return <VoiceCard entry={entry} onEntryUpdated={onEntryUpdated} onEntryDeleted={onEntryDeleted} isArchived={isArchived} onRestore={onRestore} />
     }
 
     // ── Poll Card ──

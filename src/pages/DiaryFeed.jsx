@@ -17,6 +17,7 @@ import CustomizationPanel from '../components/CustomizationPanel'
 import ExportPanel from '../components/ExportPanel'
 import SearchPanel from '../components/SearchPanel'
 import ThemeToggle from '../components/ThemeToggle'
+import MoodTimeline from '../components/MoodTimeline'
 
 // Auto-archive shared entries older than 30 days
 const ARCHIVE_DAYS = 30
@@ -227,7 +228,7 @@ export default function DiaryFeed() {
             // Text query
             if (searchFilters.query) {
                 const query = searchFilters.query.toLowerCase()
-                const matchesText = entry.text.toLowerCase().includes(query)
+                const matchesText = (entry.text || '').toLowerCase().includes(query)
                 const matchesTags = entry.tags?.some(tag => tag.toLowerCase().includes(query))
                 if (!matchesText && !matchesTags) return false
             }
@@ -717,6 +718,19 @@ export default function DiaryFeed() {
                                             </AnimatePresence>
                                         </div>
                                     </div>
+                                )}
+                            </div>
+                        )}
+
+                        {/* 📊 MOOD TAB */}
+                        {activeTab === 'mood' && (
+                            <div className="px-4 sm:px-6 pt-4">
+                                {loading ? (
+                                    <LoadingState />
+                                ) : entries.length === 0 ? (
+                                    <EmptyState icon="📊" title="No mood data yet" subtitle="Write some diary entries and your mood timeline will appear here." />
+                                ) : (
+                                    <MoodTimeline entries={entries} />
                                 )}
                             </div>
                         )}

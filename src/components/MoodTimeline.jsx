@@ -92,7 +92,7 @@ export default function MoodTimeline({ entries }) {
                         const date = new Date(entry.created_at)
                         const dateStr = date.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })
                         const timeStr = date.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', hour12: true })
-                        const preview = entry.text.length > 80 ? entry.text.slice(0, 80) + '…' : entry.text
+                        const preview = (entry.text || '').length > 80 ? entry.text.slice(0, 80) + '…' : (entry.text || '🎙️ Voice note')
 
                         return (
                             <motion.div
